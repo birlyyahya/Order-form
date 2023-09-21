@@ -1,0 +1,10 @@
+RewriteEngine On
+    RewriteBase /orderform/
+
+    # Hapus index.php dari URL
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php/$1 [L]
+
+    # Hapus "instan" dari URL
+    RewriteRule ^instan/(.*)$ /$1 [R=301,L]
