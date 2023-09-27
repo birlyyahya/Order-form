@@ -43,7 +43,7 @@
 
 
 <!-- main content -->
-<form action="<?= base_url('getMenu') ?>" method="POST">
+<form action="<?= base_url('instan/uploadkonten/') ?>" method="POST">
     <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-8 mb-8 w-1/2 mx-auto shadow-md">
         <div class="mb-6 menu-list">
             <div class="menu-items flex my-3">
@@ -116,7 +116,7 @@
             </button>
         </div>
         <div class="flex justify-space-between pt-10">
-            <a href="<?= base_url('selesai') ?>" id="btn-lewati" class="learn-more self-center mb-4">
+            <a href="<?= base_url('checkout')?>" id="btn-lewati" class="learn-more self-center mb-4">
                 <span class="circle" aria-hidden="true">
                     <span class="icon arrow"></span>
                 </span>

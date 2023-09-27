@@ -51,10 +51,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['konten'] = 'instan/konten';
 $route['kuisioner'] = 'instan/kuisioner';
-$route['menu'] = 'instan/menu';
-$route['selesai'] = 'instan/selesai';
+$route['menu'] = 'instan/menu/';
+$route['checkout'] = 'instan/selesai';
+$route['logout'] = 'instan/logout';
 $route['upload-konten'] = 'instan/uploadKonten';
-$route['getMenu'] = 'menu/menuGet';
 $route['getKonten'] = 'Uploadkonten/kontenGet';
 $route['default_controller'] = 'instan';
 $route['404_override'] = '';

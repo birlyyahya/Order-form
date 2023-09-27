@@ -51,7 +51,8 @@
     }
 </style>
 
-<body style="overflow: inherit !important;">
+
+<body style="overflow: inherit !important; overflow:hidden;">
 
     <!-- Navbar -->
     <nav class="bg-white border-gray-200 dark:bg-gray-900 mb-8" style="box-shadow:0px -7px 12px 0px;">
@@ -66,14 +67,14 @@
                 </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <ul class="text-sm flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                     <li>
-                        <button class="login bg-gray-800">
+                        <a href="https://web.dewahoster.co.id/login" class="login bg-gray-800">
                             <div class="sign-login"><svg viewBox="0 0 14 18" class="w-5 h-5">
                                     <path d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"></path>
                                 </svg></div>
-                            <div class="text-login text-sm">Login</div>
-                        </button>
+                            <div class="pl-3 text-login text-sm">Login</div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -85,6 +86,70 @@
             <?= $contents ?>
         </div>
     </section>
+
+    <!-- section product offer -->
+    <section class="bg-white dark:bg-gray-900 mb-5 mt-5">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
+            <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12 mb-8">
+                <a href="#" class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
+                    <svg class="w-2.5 h-2.5 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
+                        <path d="M11 0H2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm8.585 1.189a.994.994 0 0 0-.9-.138l-2.965.983a1 1 0 0 0-.685.949v8a1 1 0 0 0 .675.946l2.965 1.02a1.013 1.013 0 0 0 1.032-.242A1 1 0 0 0 20 12V2a1 1 0 0 0-.415-.811Z" />
+                    </svg>
+                    Website Instan
+                </a>
+                <h1 class="text-gray-900 dark:text-white text-3xl md:text-5xl font-extrabold mb-2">Membuat website dengan berbagai kemudahan</h1>
+                <p class="text-lg font-normal text-gray-500 dark:text-gray-400 mb-6">Bebas berkreasi dengan template buatan desainer.</p>
+                </a>
+            </div>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12">
+                    <a href="#" class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
+                        <svg class="w-2.5 h-2.5 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                            <path d="M17 11h-2.722L8 17.278a5.512 5.512 0 0 1-.9.722H17a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1ZM6 0H1a1 1 0 0 0-1 1v13.5a3.5 3.5 0 1 0 7 0V1a1 1 0 0 0-1-1ZM3.5 15.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM16.132 4.9 12.6 1.368a1 1 0 0 0-1.414 0L9 3.55v9.9l7.132-7.132a1 1 0 0 0 0-1.418Z" />
+                        </svg>
+                        Design
+                    </a>
+                    <h2 class="text-blue-400 dark:text-white/75 text-6xl font-extrabold mb-2">01</h2>
+                    <p class="text-lg font-bold text-gray-700 dark:text-white mb-1">Pilih Template.</p>
+                    <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4">Pilih tema website yang Anda inginkan.</p>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12">
+                    <a href="#" class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
+                        <svg class="w-2.5 h-2.5 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                            <path d="M17 11h-2.722L8 17.278a5.512 5.512 0 0 1-.9.722H17a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1ZM6 0H1a1 1 0 0 0-1 1v13.5a3.5 3.5 0 1 0 7 0V1a1 1 0 0 0-1-1ZM3.5 15.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM16.132 4.9 12.6 1.368a1 1 0 0 0-1.414 0L9 3.55v9.9l7.132-7.132a1 1 0 0 0 0-1.418Z" />
+                        </svg>
+                        Order
+                    </a>
+                    <h2 class="text-blue-400 dark:text-white/75 text-6xl font-extrabold mb-2">02</h2>
+                    <p class="text-lg font-bold text-gray-700 dark:text-white mb-1">Order Website.</p>
+                    <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4">Order website dan ikuti langkah-langkah pembayarannya.</p>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12">
+                    <a href="#" class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
+                        <svg class="w-2.5 h-2.5 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                            <path d="M17 11h-2.722L8 17.278a5.512 5.512 0 0 1-.9.722H17a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1ZM6 0H1a1 1 0 0 0-1 1v13.5a3.5 3.5 0 1 0 7 0V1a1 1 0 0 0-1-1ZM3.5 15.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM16.132 4.9 12.6 1.368a1 1 0 0 0-1.414 0L9 3.55v9.9l7.132-7.132a1 1 0 0 0 0-1.418Z" />
+                        </svg>
+                        Kustom
+                    </a>
+                    <h2 class="text-blue-400 dark:text-white/75 text-6xl font-extrabold mb-2">03</h2>
+                    <p class="text-lg font-bold text-grey-900 dark:text-white mb-1">Lakukan Kutomisasi.</p>
+                    <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4">Drag & drop untuk atur tata letak, gambar, dan teks..</p>
+                </div>
+                <div class="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-12">
+                    <a href="#" class="bg-blue-100 text-blue-800 text-xs font-medium inline-flex items-center px-2.5 py-0.5 rounded-md dark:bg-gray-700 dark:text-blue-400 mb-2">
+                        <svg class="w-2.5 h-2.5 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                            <path d="M17 11h-2.722L8 17.278a5.512 5.512 0 0 1-.9.722H17a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1ZM6 0H1a1 1 0 0 0-1 1v13.5a3.5 3.5 0 1 0 7 0V1a1 1 0 0 0-1-1ZM3.5 15.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2ZM16.132 4.9 12.6 1.368a1 1 0 0 0-1.414 0L9 3.55v9.9l7.132-7.132a1 1 0 0 0 0-1.418Z" />
+                        </svg>
+                        Online
+                    </a>
+                    <h2 class="text-blue-400 dark:text-white/75 text-6xl font-extrabold mb-2">04</h2>
+                    <p class="text-lg font-bold text-grey-900 dark:text-white mb-1">Website Online.</p>
+                    <p class="text-md font-normal text-gray-500 dark:text-gray-400 mb-4">Selamat, website Anda telah aktif! Mulai kelola website Anda.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end section product offer -->
 
     <!-- Footer -->
     <footer class="bg-center bg-no-repeat bg-blue-900 bg-blend-multiply p-8" id="footer-bg">
@@ -176,65 +241,86 @@
             </div>
         </div>
     </footer>
-
+    <!-- <div modal-backdrop="" class="bg-gray-900 bg-opacity-50 dark:bg-opacity-80 fixed inset-0 z-40"></div> -->
 </body>
+<script src="<?= base_url('node_modules/jquery/dist/jquery.min.js') ?>"></script>
+<script src="<?= base_url('assets/js/index.js') ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
+
 
 <script>
-    const gradientBackground = document.getElementById('gradient-background');
-    const pilihTemplateButton = document.getElementById('pilih-template');
-    const iconTemplate = document.getElementById('icon-template');
-    const popupModalTemplate = document.getElementById('popup-modal-template');
-    const buttonLanjutkan = document.querySelectorAll('#button-lanjutkan');
+    $(document).ready(function() {
+        $("#loginForm").submit(function(e) {
+            e.preventDefault(); // Mencegah pengiriman formulir melalui metode standar
 
-    // Mendapatkan elemen-elemen yang diperlukan
-    const searchInput = document.getElementById('default-search');
-    const loadingDiv = document.getElementById('loading-domain');
-    const myTab = document.getElementById('myTab');
-    const resultDiv = document.getElementById('result-domain');
-    const btnDaftarDomain = document.querySelectorAll('#btn-daftar-domain');
-    const resultDivNonValid = document.getElementById('result-domain-nonvalid');
-    const addCartDomain = document.getElementById('add-cart-domain');
-    const tabs = document.querySelectorAll('[data-tabs-target]');
-    const resultDivs = document.querySelectorAll('#result-domain');
-    const eppAuth = document.getElementById('epp-auth');
+            // Mengambil nilai input email dan password
+            var email = $("#emailLogin").val();
+            var password = $("#passwordLogin").val();
 
-    let activeTab = null;
-
-    tabs.forEach(function(tab) {
-        tab.addEventListener('click', function() {
-            searchInput.value = '';
-
-            // Sembunyikan elemen-elemen hasil
-            resultDivs.forEach(function(resultDiv) {
-                resultDiv.style.display = 'none';
-                resultDivNonValid.style.display = 'none';
-                addCartDomain.classList.replace('hidden', 'visible');
+            // Melakukan pengiriman data ke fungsi login menggunakan AJAX
+            $.ajax({
+                type: "POST",
+                url: '<?= base_url('instan/login') ?>', // Ganti dengan URL Anda
+                data: {
+                    email: email,
+                    password: password,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Callback yang akan dijalankan setelah respons selesai
+                    console.log(response);
+                    if (response) {
+                        // Respons berhasil, Anda dapat melakukan tindakan sesuai kebutuhan
+                        alert("Login berhasil!");
+                    } else {
+                        // Respons gagal atau ada kesalahan, tampilkan pesan kesalahan atau lakukan tindakan lain
+                        alert("Login gagal: " + response.error);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Penanganan kesalahan AJAX jika diperlukan
+                    console.error(xhr, status, error);
+                },
             });
-
-            // Sembunyikan elemen loading
-            loadingDiv.style.display = 'none';
-            eppAuth.style.display = 'none';
-
-            if (activeTab) {
-                activeTab.removeAttribute('disabled');
-            }
-
-            tab.setAttribute('disabled', 'true');
-            activeTab = tab;
         });
     });
 
-    if (tabs.length > 0) {
-        tabs[0].click();
-    }
+    <?php if (!$this->session->userdata('getUrl')) {
+    ?>
+        document.addEventListener('DOMContentLoaded', function(e) {
 
+            // Memanggil fungsi loginGoogle melalui AJAX
+            $.ajax({
+                url: "<?php echo base_url('instan/loginGoogle'); ?>", // Ganti dengan URL yang sesuai
+                type: 'POST',
+                dataType: 'json',
+                success: function(response) {
+
+                    console.log(response['status']);
+                    // Callback yang akan dijalankan setelah respons selesai
+                    if (response.status === 1) {
+                        var googleSignInLink = document.getElementById('google-sign-in');
+                        googleSignInLink.href = response.data;
+                    } else {
+                        console.log(response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Penanganan kesalahan AJAX jika diperlukan
+                    console.error(xhr, status, error);
+                }
+            });
+        });
+    <?php
+    } ?>
     // Menambahkan event listener untuk input pencarian
     btnDaftarDomain.forEach(function(btnDomain) {
         btnDomain.addEventListener('click', function() {
             event.preventDefault();
 
             const domainOrder = document.querySelector('.items-order-domain');
-            const searchInputs = btnDomain.parentElement.querySelector('#default-search');
+            const searchInputs = btnDomain.parentElement.querySelector('.default-search');
             const searchValue = searchInputs.value;
 
             if (!searchValue) {
@@ -243,7 +329,7 @@
                 return; // Keluar dari fungsi jika input kosong
             }
 
-            if(domainOrder){
+            if (domainOrder) {
                 hapusOrder(domainOrder);
             }
 
@@ -254,27 +340,84 @@
             getIdCategory = btnDomain.getAttribute('aria-labelledby');
 
             if (getIdCategory === "daftardomain-tab") {
+                eppAuth.style.display = 'none';
                 if (/\.[a-zA-Z]+$/.test(searchValue)) {
-                    const strongElement = resultDiv.querySelector('#namadomain');
-                    strongElement.innerHTML = '<strong>' + searchValue + '</strong> is available! ';
-                    strongElement.nextElementSibling.innerHTML= "Rp 170,000<sub>/yr</sub>";
-
-                    addCartDomain.setAttribute('onclick', 'addOrder("' + searchValue + '")');
                     loadingDiv.style.display = 'block';
+                    $.ajax({
+                        type: "POST", // Metode HTTP yang digunakan (POST)
+                        url: "<?php echo base_url('api/getDomain'); ?>", // URL controller CI3
+                        data: {
+                            domain: searchValue
+                        }, // Data yang akan dikirim
+                        dataType: "json", // Tipe data yang diharapkan dalam respons (JSON)
+                        success: function(response) {
+                            // Tangani respons dari controller di sini
+                            console.log(response); // Contoh: Cetak respons ke konsol
 
-                    setTimeout(function() {
-                        loadingDiv.style.display = 'none';
-                        resultDivNonValid.style.display = 'none';
+                            if (response['result'] === 'error') {
+                                const strongElement = resultDivNonValid.querySelector('#namadomain strong');
+                                strongElement.textContent = searchValue;
 
-                        resultDiv.style.display = 'block';
-                    }, 2000);
+
+                                loadingDiv.style.display = 'block';
+
+                                // Sembunyikan tampilan loading
+                                loadingDiv.style.display = 'none';
+                                resultDiv.style.display = 'none';
+
+                                // Tampilkan tampilan hasil
+                                resultDivNonValid.style.display = 'block';
+                                return;
+                            }
+
+                            const strongElement = resultDiv.querySelector('#namadomain');
+
+                            var formatIDR = Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(response['register']['1']);
+                            var IDR = formatIDR.replace(/\,00$/, '')
+
+                            strongElement.innerHTML = '<strong>' + searchValue + '</strong> is available! ';
+                            strongElement.nextElementSibling.innerHTML = IDR + "<sub>/yr</sub>";
+                            addCartDomain.setAttribute('onclick', 'addOrder("' + searchValue + '","' + IDR + '")');
+
+                            // Hilangkan loading
+                            loadingDiv.style.display = 'none';
+                            // Hilangkang result unvalid
+                            resultDivNonValid.style.display = 'none';
+
+                            // munculkan hasil berhasil
+                            resultDiv.style.display = 'block';
+                            return;
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log("Kegagalan permintaan: " + status + " - " + error);
+                            const strongElement = resultDivNonValid.querySelector('#namadomain strong');
+                            strongElement.textContent = searchValue;
+
+
+                            loadingDiv.style.display = 'block';
+
+                            // Sembunyikan tampilan loading
+                            loadingDiv.style.display = 'none';
+                            resultDiv.style.display = 'none';
+
+                            // Tampilkan tampilan hasil
+                            resultDivNonValid.style.display = 'block';
+                            return;
+                        }
+                    });
                 } else {
-                    const strongElement = resultDivNonValid.querySelector('#namadomain');
+                    const strongElement = resultDivNonValid.querySelector('#namadomain strong');
                     strongElement.textContent = searchValue;
 
+
                     loadingDiv.style.display = 'block';
 
                     setTimeout(function() {
+                        // Sembunyikan tampilan loading
                         loadingDiv.style.display = 'none';
                         resultDiv.style.display = 'none';
 
@@ -283,30 +426,65 @@
                     }, 2000);
                 }
 
+
             } else if (getIdCategory === "transferdomain-tab") {
                 if (/\.[a-zA-Z]+$/.test(searchValue)) {
-                    // Memperbarui teks dalam elemen <h2><strong>
-                    const strongElement = resultDiv.querySelector('#namadomain');
-                    
-                    console.log(eppAuth);
-
-                    strongElement.innerHTML = '<strong>' + searchValue + '</strong> memenuhi syarat untuk ditransfer';
-                    strongElement.nextElementSibling.innerHTML = "Rp 170,000<sub>/yr</sub>";
-
-                    addCartDomain.setAttribute('onclick', 'addOrder("' + searchValue + '")');
-                    // Tampilkan tampilan loading
                     loadingDiv.style.display = 'block';
-                    
-                    // Simulasikan proses loading
-                    setTimeout(function() {
-                        // Sembunyikan tampilan loading
-                        loadingDiv.style.display = 'none';
-                        resultDivNonValid.style.display = 'none';
-                        
-                        eppAuth.style.display = 'flex';
-                        // Tampilkan tampilan hasil
-                        resultDiv.style.display = 'block';
-                    }, 2000);
+                    // Memperbarui teks dalam elemen <h2><strong>
+                    $.ajax({
+                        type: "POST", // Metode HTTP yang digunakan (POST)
+                        url: "<?php echo base_url('api/getDomain'); ?>", // URL controller CI3
+                        data: {
+                            domain: searchValue
+                        }, // Data yang akan dikirim
+                        dataType: "json", // Tipe data yang diharapkan dalam respons (JSON)
+                        success: function(response) {
+                            // Tangani respons dari controller di sini
+                            console.log(response); // Contoh: Cetak respons ke konsol
+
+                            if (response['status'] === 'available') {
+                                const strongElement = resultDivNonValid.querySelector('#namadomain strong');
+                                strongElement.textContent = searchValue;
+
+
+                                loadingDiv.style.display = 'block';
+
+                                // Sembunyikan tampilan loading
+                                loadingDiv.style.display = 'none';
+                                resultDiv.style.display = 'none';
+
+                                // Tampilkan tampilan hasil
+                                resultDivNonValid.style.display = 'block';
+                                return;
+                            }
+
+                            const strongElement = resultDiv.querySelector('#namadomain');
+
+                            var formatIDR = Intl.NumberFormat('id-ID', {
+                                style: 'currency',
+                                currency: 'IDR'
+                            }).format(response['transfer']['1']);
+                            var IDR = formatIDR.replace(/\,00$/, '')
+
+                            strongElement.innerHTML = '<strong>' + searchValue + '</strong> memenuhi syarat untuk ditransfer';
+                            strongElement.nextElementSibling.innerHTML = IDR + "<sub>/yr</sub>";
+                            addCartDomain.setAttribute('onclick', 'addOrder("' + searchValue + '","' + IDR + '")');
+
+                            // Hilangkan loading
+                            loadingDiv.style.display = 'none';
+                            eppAuth.style.display = 'flex';
+                            // Hilangkang result unvalid
+                            resultDivNonValid.style.display = 'none';
+
+                            // munculkan hasil berhasil
+                            resultDiv.style.display = 'block';
+                            return;
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log("Kegagalan permintaan: " + status + " - " + error);
+                        }
+                    });
                 } else {
                     const strongElement = resultDivNonValid.querySelector('#namadomain strong');
                     strongElement.textContent = searchValue;
@@ -324,29 +502,65 @@
                     }, 2000);
                 }
             } else if (getIdCategory === "hostingsaja-tab") {
+                eppAuth.style.display = 'none';
                 if (/\.[a-zA-Z]+$/.test(searchValue)) {
-                    // Memperbarui teks dalam elemen <h2><strong>
-                    const strongElement = resultDiv.querySelector('#namadomain');
-                    strongElement.innerHTML = '<strong>' + searchValue + '</strong> berhasil digunakan';
-                    thirdElement = strongElement.nextElementSibling;
-                    hiddenButton = thirdElement.nextElementSibling;
-                    if (hiddenButton) {
-                        hiddenButton.classList.add('hidden');
-                    }
 
                     // Tampilkan tampilan loading
                     loadingDiv.style.display = 'block';
+                    $.ajax({
+                        type: "POST", // Metode HTTP yang digunakan (POST)
+                        url: "<?php echo base_url('api/getDomain'); ?>", // URL controller CI3
+                        data: {
+                            domain: searchValue
+                        }, // Data yang akan dikirim
+                        dataType: "json", // Tipe data yang diharapkan dalam respons (JSON)
+                        success: function(response) {
+                            // Tangani respons dari controller di sini
+                            console.log(response); // Contoh: Cetak respons ke konsol
 
-                    // Simulasikan proses loading
-                    setTimeout(function() {
-                        // Sembunyikan tampilan loading
-                        loadingDiv.style.display = 'none';
-                        resultDivNonValid.style.display = 'none';
+                            if (response['status'] === 'available') {
+                                const strongElement = resultDivNonValid.querySelector('#namadomain strong');
+                                strongElement.textContent = searchValue;
 
-                        // Tampilkan tampilan hasil
-                        resultDiv.style.display = 'block';
-                        addOrder(searchValue);
-                    }, 2000); // Angka ini adalah waktu simulasi loading (dalam milidetik)
+
+                                loadingDiv.style.display = 'block';
+
+                                // Sembunyikan tampilan loading
+                                loadingDiv.style.display = 'none';
+                                resultDiv.style.display = 'none';
+
+                                // Tampilkan tampilan hasil
+                                resultDivNonValid.style.display = 'block';
+                                return;
+                            }
+
+                            // Memperbarui teks dalam elemen <h2><strong>
+                            const strongElement = resultDiv.querySelector('#namadomain');
+
+                            var IDR = '-';
+
+                            strongElement.innerHTML = '<strong>' + searchValue + '</strong> berhasil digunakan';
+                            thirdElement = strongElement.nextElementSibling;
+                            hiddenButton = thirdElement.nextElementSibling;
+                            addOrder(searchValue, IDR);
+                            if (hiddenButton) {
+                                hiddenButton.classList.add('hidden');
+                            }
+
+                            // Hilangkan loading
+                            loadingDiv.style.display = 'none';
+                            // Hilangkang result unvalid
+                            resultDivNonValid.style.display = 'none';
+
+                            // munculkan hasil berhasil
+                            resultDiv.style.display = 'block';
+                            return;
+                        },
+                        error: function(xhr, status, error) {
+
+                            console.log("Kegagalan permintaan: " + status + " - " + error);
+                        }
+                    });
                 } else {
                     const strongElement = resultDivNonValid.querySelector('#namadomain strong');
                     strongElement.textContent = searchValue;
@@ -369,126 +583,11 @@
             }
         });
     });
-
-    pilihTemplateButton.addEventListener('click', function() {
-
-        // Mengubah kelas pada elemen dengan gradient background
-        gradientBackground.classList.add('bg-gradient-to-b', 'from-blue-50', 'to-transparent', 'dark:from-blue-900');
-        popupModalTemplate.classList.add('border-2', 'border-green-400');
-        iconTemplate.classList.replace('hidden', 'visible');
-        buttonLanjutkan.forEach(function(elemen) {
-            // Mengubah teks elemen
-            elemen.classList.replace('hidden', 'visible');
-        });
-    });
-
-    function addOrder(kategori) {
-        var orderList = document.querySelector('.list-orders');
-
-        var orderItems = document.createElement('li');
-        orderItems.className = 'grid grid-cols-3 gap-4  mt-0 items-order-domain';
-        orderItems.innerHTML = ` <div class="flex flex-col col-span-2 justify-center border-b-1">
-                        <div class="flex">
-                        <span id="order-title" class="text-gray-50 text-md font-semi-bold mr-1">` + kategori + `</span><span class="text-gray-50 text-md font-semi-bold">tahunan</span></div>
-                    </div>
-                    <div class="pt-1 text-right">
-                        <span id="order-price" class="text-gray-50 font-semibold inline-block">Rp 999.000</span>
-                    </div>`;
-        orderList.appendChild(orderItems);
-
-        addCartDomain.className = 'text-gray-50 bg-gray-500 hover:bg-gray-300 focus:ring-4 focus:ring-gray-300 font-medium rounded-md text-sm px-5 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800';
-        addCartDomain.textContent = 'Hapus';
-        addCartDomain.onclick = function() {
-            hapusOrder(orderItems); // Memanggil fungsi hapusOrder dengan elemen item order sebagai argumen
-        };
-    }
-
-    function hapusOrder(orderItem) {
-        kategori = orderItem.querySelector('#order-title');
-        orderItem.remove(); 
-        addCartDomain.className = 'text-blue-800 bg-blue-200 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800';
-        addCartDomain.textContent = 'Add Cart';
-        addCartDomain.onclick = function() {
-            addOrder(kategori.textContent); 
-        };
-    }
-
-    // Fungsi untuk menambahkan menu baru
-    function addMenu() {
-        var inputMenu = document.getElementById('inputmenu');
-        var menuName = inputMenu.value.trim();
-        var menuNumber = 0;
-
-        if (menuName === '') {
-            alert('Nama menu tidak boleh kosong');
-            return;
-        }
-
-        var menuList = document.querySelector('.menu-list');
-        var menuItems = document.querySelectorAll('.menu-items');
-
-        menuNumber = menuItems.length;
-        
-
-        var menuItems = document.createElement('div');
-        menuItems.className = 'menu-items flex my-3';
-        menuItems.innerHTML = `
-            <div class="flex flex-col space-y-1 justify-center items-center">
-                <button type="button" class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onclick="moveMenuUp(this)">
-                    <svg class="w-4 h-4 text-gray-50 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7 7.674 1.3a.91.91 0 0 0-1.348 0L1 7" />
-                    </svg>
-                </button>
-                <button type="button" class="text-white bg-blue-500 hover.bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" onclick="moveMenuDown(this)">
-                    <svg class="w-4 h-4 text-gray-50 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1" />
-                    </svg>
-                </button>
-            </div>
-            <input type="text" name="data-menu-${menuNumber+1}" class="bg-gray-50 border border-gray-300 text-gray-900 text-xl text-semibold rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${menuName}" readonly>
-            <button type="button" class="text-red-400 bg-transparent hover:bg-red-200 hover:text-red-900 rounded-lg text-lg w-10 h-10 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white self-center ml-3" onclick="deleteMenu(this)">
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                </svg>
-            </button>
-        `;
-
-        menuList.appendChild(menuItems);
-        inputMenu.value = '';
-    }
-
-    // Fungsi untuk menghapus menu
-    function deleteMenu(button) {
-        var menuItems = button.closest('.menu-items');
-
-        // Periksa apakah menu yang akan dihapus adalah menu baru
-        if (menuItems) {
-            // Hapus menu-items
-            menuItems.parentNode.removeChild(menuItems);
-        }
-    }
-
-    // Fungsi untuk memindahkan menu ke atas
-    function moveMenuUp(button) {
-        var menuItems = button.closest('.menu-items');
-        var previousMenu = menuItems.previousElementSibling;
-        if (previousMenu) {
-            menuItems.parentElement.insertBefore(menuItems, previousMenu);
-        }
-    }
-
-    // Fungsi untuk memindahkan menu ke bawah
-    function moveMenuDown(button) {
-        var menuItems = button.closest('.menu-items');
-        var nextMenu = menuItems.nextElementSibling;
-        if (nextMenu) {
-            menuItems.parentElement.insertBefore(nextMenu, menuItems);
-        }
-    }
 </script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+
+
 
 
 </html>

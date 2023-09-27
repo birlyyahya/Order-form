@@ -1,0 +1,66 @@
+<?php 
+$template = [
+    "template-1" => [
+        'id' => '1',
+        'name' => 'Sekolahku',
+        'pricing' => '150000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image.jpg',
+        'link' => '',
+    ],
+    "template-2" => [
+        'id' => '2',
+        'name' => 'Pasarmalam',
+        'pricing' => '95000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg',
+        'link' => '',
+    ],
+    "template-3" => [
+        'id' => '3',
+        'name' => 'DriverOnline',
+        'pricing' => '50000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg',
+        'link' => '',
+    ],
+    "template-4" => [
+        'id' => '4',
+        'name' => 'Shoppe',
+        'pricing' => '100000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg',
+        'link' => '',
+    ],
+    "template-5" => [
+        'id' => '5',
+        'name' => 'TokoKami',
+        'pricing' => '150000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg',
+        'link' => '',
+    ],
+    "template-6" => [
+        'id' => '6',
+        'name' => 'DokterShop',
+        'pricing' => '90000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg',
+        'link' => '',
+    ],
+    "template-7" => [
+        'id' => '7',
+        'name' => 'SurveySahabat',
+        'pricing' => '750000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-6.jpg',
+        'link' => '',
+    ],
+    "template-8" => [
+        'id' => '8',
+        'name' => 'CompanyProfile',
+        'pricing' => '120000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-7.jpg',
+        'link' => '',
+    ],
+    "template-9" => [
+        'id' => '9',
+        'name' => 'Google',
+        'pricing' => '100000',
+        'img' => 'https://flowbite.s3.amazonaws.com/docs/gallery/square/image-8.jpg',
+        'link' => '',
+    ],
+];

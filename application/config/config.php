@@ -138,7 +138,7 @@ $config['subclass_prefix'] = 'MY_';
 | Note: This will NOT disable or override the CodeIgniter-specific
 |	autoloading (application/config/autoload.php)
 */
-$config['composer_autoload'] = FALSE;
+$config['composer_autoload'] = FCPATH . 'vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -530,3 +530,17 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+// WHMCS
+$config['identifier'] = 'u5c8ECJ1VyPquZmGPEEu1IihUInZsNEu';
+$config['secret'] = 'OKC5Oq8r7CbYoNPP7WLhguGr1K8FKMxS';
+$config['urlsite'] = 'https://web.dewahoster.co.id/';
+
+// raja ongkir
+$config['API_KEY'] = 'ca35445b9b74573bfea2fbd3387bd58f';
+
+// Google Auth
+$config['google_key'] = '474235964539-ch1agl0tje8md6r7nc0lihgsncj3tumi.apps.googleusercontent.com';
+$config['google_secret'] = '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';
+$config['google_redirect'] = 'http://localhost:8080/orderform/';
+

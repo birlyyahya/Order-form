@@ -37,9 +37,9 @@
 
 <h1 class="mb-5 text-4xl font-extrabold tracking-tight leading-none text-center text-gray-900 md:text-3xl lg:text-3xl dark:text-white">Kuisioner</h1>
 <p class="font-normal text-gray-700 dark:text-gray-400 text-center mb-4">Silahkan download kuesioner di bawah ini, kemudian isi dan kirimkan <br>
-    ke email info@rumahweb.com setelah Anda menyelesaikan proses pemesanan ini.</p>
+    ke email info@dewahoster.com setelah Anda menyelesaikan proses pemesanan ini.</p>
 
-<a href="" class="flex justify-center text-blue-600 hover:underline mb-10">
+<a href="<?= base_url('public/download/KuesionerKontenWebsite.docx') ?>" download class="flex justify-center text-blue-600 hover:underline mb-10">
     <svg class="w-5 h-5 text-blue-600 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 18">
         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 1v11m0 0 4-4m-4 4L4 8m11 4v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3" />
     </svg>
@@ -49,8 +49,8 @@
 </a>
 
 <!-- button next step -->
-<button id="button-lanjutkan" type="button" class="mb-20 flex mx-auto text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-lg px-14 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 items-end">
-    <a href="<?= base_url('konten') ?>" class="pr-2">
+<a href="<?= base_url('checkout/')?>" class="pr-2">
+    <button id="button-lanjutkan" type="button" class="mb-20 flex mx-auto text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-lg px-14 py-4 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 items-end">
         Lanjutkan
     </a>
     <span>

@@ -50,7 +50,7 @@
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Punya Konten</h5>
             </a>
             <p class="mb-16 pb-1 font-normal text-gray-700 dark:text-gray-400">Konten bisa dalam bentuk scan brosur, foto, file pdf, dan Microsoft Word. Selanjutnya Anda akan diminta menyusun menu dan mengirimkan konten.</p>
-            <a href="<?= base_url('menu') ?>" class="inline-flex items-center px-8 py-3 text-md font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <a href="<?= base_url('menu/') ?>" class="inline-flex items-center px-8 py-3 text-md font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Lanjutkan
                 <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
@@ -67,7 +67,7 @@
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Tidak Punya Konten</h5>
             </a>
             <p class="mb-5 font-normal text-gray-700 dark:text-gray-400">Anda akan diminta menjawab beberapa pertanyaan untuk membantu kami menyusun konten. Konten yang kami bantu buat <strong>terbatas</strong> pada Home, Tentang Kami, Produk/Layanan, dan Kontak (4 halaman) dengan biaya tambahan <strong>Rp 250.000</strong></p>
-            <a href="<?= base_url('kuisioner') ?>" class="inline-flex items-center px-8 py-3 text-md font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-blue-800">
+            <a href="<?= base_url('kuisioner/') ?>" class="inline-flex items-center px-8 py-3 text-md font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-blue-800">
                 Lanjutkan
                 <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
@@ -77,7 +77,7 @@
     </div>
 </div>
 <div class="flex text-center flex-col">
-    <a href="<?= base_url('selesai') ?>" id="btn-lewati" class="learn-more self-center mb-4">
+    <a href="<?= base_url('checkout')?>" id="btn-lewati" class="learn-more self-center mb-4">
         <span class="circle" aria-hidden="true">
             <span class="icon arrow"></span>
         </span>
