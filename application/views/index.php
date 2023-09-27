@@ -30,7 +30,7 @@
         <form action="<?= base_url('konten') ?>" method="POST">
             <!-- button lanjutkan -->
             <p class="mb-5 text-lg font-semibold text-gray-500 lg:text-xl text-center dark:text-gray-400">STEP 1</p>
-            <button id="button-lanjutkan" type="button" class="mb-5 hidden flex mx-auto text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-lg px-14 py-4 text-center mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button id="button-lanjutkan" type="submit" class="mb-5 hidden flex mx-auto text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-lg px-14 py-4 text-center mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Lanjutkan
             </button>
             <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-center text-gray-900 md:text-3xl lg:text-3xl dark:text-white">Pilih Template</h1>
@@ -47,7 +47,7 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <?php
                 foreach ($data as $key => $value) { ?>
-                    <div id="<?= $value['id'] ?>" onclick="getImage(this)" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="relative group rounded" data-preview="<?= $value['link'] ?>">
+                    <div id="<?= $value['name'].'-'.$value['id'] ?>" onclick="getImage(this)" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="relative group rounded" data-preview="<?= $value['link'] ?>">
                         <div id="gradient-background" class="w-full h-full absolute top-0 left-0 z-0"></div>
                         <img class="h-auto max-w-full rounded-lg cursor-pointer shadow-md " style="z-index: 99;" src="<?= $value['img'] ?>" alt="">
                         <div id="icon-template" class="absolute hidden inset-0 flex items-center justify-center text-green-500 opacity-100 transition duration-300">

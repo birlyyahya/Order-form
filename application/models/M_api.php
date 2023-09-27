@@ -235,7 +235,7 @@ class M_api extends CI_Model
         //     return $tmp;
     }
 
-    function addUser() : Returntype {
+    function addUser() {
         
     }
 

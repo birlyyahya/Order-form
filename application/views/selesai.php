@@ -76,7 +76,7 @@
                         </div>
                         <form action="">
                             <input type="search" id="default-search-1" class="default-search block w-full p-5 pl-12 text-sm text-gray-900 border border-gray-300 rounded-lg bg-blue focus:ring-blue-500 focus:border-blue-500 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Temukan nama domain baru Anda..." required>
-                            <button id="btn-daftar-domain-1" aria-labelledby="daftardomain-tab" type="submit" class="btn-daftar-domain text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-12 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cari</button>
+                            <button id="btn-daftar-domain-1" onclick="loadingButton(this)" aria-labelledby="daftardomain-tab" type="submit" class="btn-daftar-domain text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-12 py-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Cari</button>
                         </form>
                     </div>
                 </div>
@@ -186,13 +186,13 @@
                     <?php
                     if (!$this->session->userdata('access_token')) {
                     ?>
-                        <a href="<?= $this->session->userdata('getUrl') ?>" id="google-sign-in" class="flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-blue-500 rounded-md group hover:bg-blue-500 focus:outline-none">
-                            <span>
+                        <a href="<?= $this->session->userdata('getUrl') ?>" onclick="loadingButton(this)" id="google-sign-in" class="flex items-center justify-center px-4 py-2 space-x-2 transition-colors duration-300 border border-blue-500 rounded-md group hover:bg-blue-500 focus:outline-none">
+                            <span id="login_logo_google">
                                 <svg class="w-6 h-6 text-blue-500 group-hover:text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 19">
                                     <path fill-rule="evenodd" d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841 8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7 2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882 5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0 5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088 1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z" clip-rule="evenodd" />
                                 </svg>
                             </span>
-                            <span class="text-sm font-medium text-blue-500 group-hover:text-white">Sign In with Google</span>
+                            <p class="text-sm font-medium text-blue-500 group-hover:text-white">Sign In with Google</p>
                         </a>
                         <?php if ($this->session->flashdata('error')) {
                         ?>
@@ -202,7 +202,7 @@
                                 </svg>
                                 <span class="sr-only">Info</span>
                                 <div class="ml-3 text-sm font-normal ">
-                                 <strong>Link Initiated! </strong> Please complete sign in to associate this service with your existing account. You will only have to do this once.
+                                    <strong>Link Initiated! </strong> Please complete sign in to associate this service with your existing account. You will only have to do this once.
                                 </div>
                                 <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-yellow-50 text-yellow-500 rounded-lg focus:ring-2 focus:ring-yellow-400 p-1.5 hover:bg-yellow-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-yellow-300 dark:hover:bg-gray-700" data-dismiss-target="#alert-4" aria-label="Close">
                                     <span class="sr-only">Close</span>
@@ -218,7 +218,7 @@
                             <p class="text-md px-5 font-normal text-gray-500 group-hover:text-white">atau</p>
                             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700 w-1/2">
                         </div>
-                        <form class="grid grid-cols-1 md:flex flex-row gap-4" id="loginForm">
+                        <form class="grid grid-cols-1 md:flex flex-row gap-4">
                             <div class="flex flex-col flex-1">
                                 <label class="text-gray-600 dark:text-gray-200" for="emailLogin">Email Address</label>
                                 <input id="emailLogin" type="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
@@ -228,7 +228,7 @@
                                 <input id="passwordLogin" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                             </div>
                             <div class="flex flex-col-reverse">
-                                <button type="submit" class="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4">Log in</button>
+                                <button type="submit" id="login_google" onclick="loadingButton(this)" class="w-full px-4 py-2 text-md font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4">Log in</button>
                             </div>
                         </form>
                     <?php } else { ?>
@@ -249,6 +249,8 @@
                     </svg>
                 </button>
             </h2>
+
+            <!-- register -->
             <div id="accordion-color-body-2" class="hidden" aria-labelledby="accordion-color-heading-2">
                 <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
                     <form class="p-3">
@@ -414,32 +416,37 @@
     </div>
     <!-- end search -->
     <!-- order summary -->
-    <div class="p-5 flex flex-col">
+    <form class="p-5 flex flex-col">
         <div class=" bg-blue-500 rounded-lg lg:block">
             <h1 class="py-6 text-xl text-gray-50 px-8">Ringkasan Pesanan</h1>
             <ul class="py-6 space-y-1 px-8 list-orders">
                 <li class="grid grid-cols-2 md:grid-cols-2 gap-4  mt-0 items-order">
                     <div class="justify-center border-b-1">
-                        <span id="order-tittle" class="text-gray-50 text-md font-semi-bold"><?= $id; ?> 1 Tahun</span>
+                        <span id="order-tittle" class="text-gray-50 text-md font-semi-bold"><?= preg_replace('/-\d+/', '', $id) ?> 1 Tahun</span>
                     </div>
                     <div class="text-right">
                         <span id="order-price" class="text-gray-50 font-semibold inline-block">Rp 999.000</span>
                     </div>
                 </li>
-                <li class="grid grid-cols-2 md:grid-cols-2 gap-4  mt-0 items-order">
-                    <div class="justify-center border-b-1">
-                        <span id="order-tittle" class="text-gray-50 text-md font-semi-bold">Copywriting</span>
-                    </div>
-                    <div class="text-right">
-                        <span id="order-price" class="text-gray-50 font-semibold inline-block">Rp 250.000</span>
-                    </div>
-                </li>
+                <?php if ($this->session->userdata('data_perusahaan') === 'kuisioner') {
+                ?>
+                    <li class="grid grid-cols-2 md:grid-cols-2 gap-4  mt-0 items-order">
+                        <div class="justify-center border-b-1">
+                            <span id="order-tittle" class="text-gray-50 text-md font-semi-bold">Copywriting</span>
+                        </div>
+                        <div class="text-right">
+                            <span id="order-price" class="text-gray-50 font-semibold inline-block">Rp 250.000</span>
+                        </div>
+                    </li>
+                <?php
+                }
+                ?>
             </ul>
             <div class="px-8 flex flex-col space-y-2 justify-between pb-8 pt-2 text-gray-50">
                 <hr>
                 <span>Total yang dibayarkan</span>
                 <span id="order-total" class="font-bold text-4xl pb-3">Rp 1,249,000</span>
-                <button type="button" class="inline-flex justify-center items-center text-blue-500 bg-blue-100 hover:bg-blue-200 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-md px-5 py-3 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <button type="submit" class="inline-flex justify-center items-center text-blue-500 bg-blue-100 hover:bg-blue-200 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-md px-5 py-3 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     <svg class="mr-2 mt-1 w-3 h-3 text-blue-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 17">
                         <path d="M2.057 6.9a8.718 8.718 0 0 1 6.41-3.62v-1.2A2.064 2.064 0 0 1 9.626.2a1.979 1.979 0 0 1 2.1.23l5.481 4.308a2.107 2.107 0 0 1 0 3.3l-5.479 4.308a1.977 1.977 0 0 1-2.1.228 2.063 2.063 0 0 1-1.158-1.876v-.942c-5.32 1.284-6.2 5.25-6.238 5.44a1 1 0 0 1-.921.807h-.06a1 1 0 0 1-.953-.7A10.24 10.24 0 0 1 2.057 6.9Z" />
                     </svg>
@@ -451,7 +458,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 
 

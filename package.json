@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.7.31"
   }
 }

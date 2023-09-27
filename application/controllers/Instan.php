@@ -27,86 +27,158 @@ class Instan extends CI_Controller
 	public function index()
 	{
 		include('Template.php');
-
+		$this->session->unset_userdata('data_perusahaan');
+		$this->session->unset_userdata('menu');
 		$datas['data'] = $template;
 		$this->template->load('layout/layoutOrder', 'index.php', $datas);
 	}
 	public function konten()
 	{
+		$this->session->unset_userdata('data_perusahaan');
+		$this->session->unset_userdata('susunmenu');
 		$this->session->set_userdata('template', $_POST['template']);
+		
+		if (empty($this->session->userdata('template'))) {
+			$this->session->set_flashdata('firstTemplate', 'window.onload = showWelcomePopup;');
+			redirect('instan');
+		} else {
+			var_dump($this->session->userdata('template'));
+		}
 		$this->template->load('layout/layoutOrder', 'konten.php',);
 	}
 	public function kuisioner()
 	{
+		$this->session->unset_userdata('susunmenu');
+		if (empty($this->session->userdata('template'))) {
+			$this->session->set_flashdata('firstTemplate', 'window.onload = showWelcomePopup;');
+			redirect('instan');
+		}
+		$this->session->set_userdata('data_perusahaan', 'kuisioner');
 		$this->template->load('layout/layoutOrder', 'kuisioner.php');
 	}
 	public function menu()
 	{
+		if (!$this->session->userdata('template')) {
+			$this->session->set_flashdata('firstTemplate', 'window.load = showWelcomePopup;');
+			redirect('instan');
+		}
 		$this->template->load('layout/layoutOrder', 'susunmenu.php');
 	}
 	public function uploadKonten()
 	{
-		$datamenu = $_POST;
-		$getData['menu'] = $datamenu;
+		if (!$this->session->userdata('template')) {
+			$this->session->set_flashdata('firstTemplate', 'window.onload = showWelcomePopup;');
+			redirect('instan');
+		}
+		if ($_POST) {
+			$datamenu = $_POST;
+			$getData['menu'] = $datamenu;
+			$this->session->set_userdata('susunmenu', $datamenu);
+		} else {
+			redirect('menu');
+		}
+		$getData['menu'] = $this->session->userdata('susunmenu');
 		$this->template->load('layout/layoutOrder', 'uploadkonten.php', $getData);
+	}
+	function submit()
+	{
+		if ($_POST) {
+			$this->form_validation->set_rules('namaPerusahaan', 'NamaPerusahaan', 'required|regex_match[/^[a-zA-Z0-9 ]+$/]');
+			$this->form_validation->set_rules('alamat', 'Alamat', 'required|regex_match[/^[a-zA-Z0-9 ,.@-]+$/]');
+			$this->form_validation->set_rules('provinsi', 'Provinsi', 'required|regex_match[/^[a-zA-Z0-9 ]+$/]');
+			$this->form_validation->set_rules('kota', 'Kota', 'required|regex_match[/^[a-zA-Z0-9 ]+$/]');
+			$this->form_validation->set_rules('kodepos', 'Kodepos', 'required|numeric');
+			$this->form_validation->set_rules('telepon', 'Telepon', 'required|numeric');
+			$this->form_validation->set_rules('fax', 'Fax', 'required|numeric');
+			$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email');
+			$this->form_validation->set_rules('facebook', 'Facebook', 'required|trim|regex_match[/^[a-zA-Z0-9_.-]+$/]');
+			$this->form_validation->set_rules('instagram', 'instagram', 'required|trim|regex_match[/^[a-zA-Z0-9_.-]+$/]');
+			$this->form_validation->set_rules('linkedin', 'linkedin', 'required|trim|regex_match[/^[a-zA-Z0-9_.-]+$/]');
+
+			if ($this->form_validation->run() == FALSE) {
+				$getData['menu'] = $this->session->userdata('susunmenu');
+
+				$this->template->load('layout/layoutOrder', 'uploadkonten.php', $getData);
+			} else {
+				$perusahaan = [
+					'namaperusahaan' => htmlspecialchars($_POST['namaPerusahaan'], ENT_QUOTES, 'UTF-8'),
+					'alamat' =>  htmlspecialchars($_POST['alamat'], ENT_QUOTES, 'UTF-8'),
+					'negara' => htmlspecialchars($_POST['negara'], ENT_QUOTES, 'UTF-8'),
+					'provinsi' =>  htmlspecialchars($_POST['provinsi'], ENT_QUOTES, 'UTF-8'),
+					'kota' => htmlspecialchars($_POST['kota'], ENT_QUOTES, 'UTF-8'),
+					'kodepos' => htmlspecialchars($_POST['kodepos'], ENT_QUOTES, 'UTF-8'),
+					'telepon' => htmlspecialchars($_POST['telepon'], ENT_QUOTES, 'UTF-8'),
+					'fax' => htmlspecialchars($_POST['fax'], ENT_QUOTES, 'UTF-8'),
+					'email' => $_POST['email'],
+					'facebook' => $_POST['facebook'],
+					'instagram' => $_POST['instagram'],
+					'linkedin' => $_POST['linkedin'],
+				];
+
+				$current_date = date("d M Y");
+				foreach ($_FILES as $input_name => $file_data) {
+					if ($file_data['name'] !== "") {
+						$config['upload_path'] = './public/uploads/' . $current_date . '/' . $perusahaan['namaperusahaan'];
+						$config['allowed_types'] = 'pdf|docx|jpg|png';
+						$config['max_size'] = '20000';
+						$config['max_width'] = '1024';
+						$config['max_height'] = '768';
+						$this->upload->initialize($config);
+
+						if (!file_exists($config['upload_path'])) {
+							mkdir($config['upload_path'], 0777, true);
+						}
+
+						// Membuat path lengkap untuk file yang akan diunggah
+						$full_path = $config['upload_path'] . '/' . $file_data['name'];
+
+						// Memeriksa apakah file sudah ada
+						if (!file_exists($full_path)) {
+							// Jika file belum ada, lakukan proses pengunggahan
+							if ($this->upload->do_upload($input_name)) {
+								$gambar = $this->upload->data();
+
+								$perusahaan[$input_name] = array(
+									'nama' => $gambar['file_name'],
+									'path' => $gambar['full_path'],
+								);
+							} else {
+								echo 'gagal';
+								var_dump($_FILES);
+								echo $this->upload->display_errors();
+							}
+						} else {
+							// Jika file sudah ada, berikan pesan atau lakukan tindakan lain
+							echo 'File dengan nama yang sama sudah ada.';
+						}
+					}
+				}
+				$this->session->set_userdata('data_perusahaan', $perusahaan);
+				redirect('checkout');
+			}
+		} else {
+			redirect('menu');
+		}
 	}
 	public function selesai()
 	{
-		if (!$this->session->userdata('access_token')) {
-			$this->loginGoogle();
-		}
 
-		$profile = $this->session->userdata('profile');
-
-		$template = $this->session->userdata('template');
-
-		// if (isset($_POST)) {
-		$current_date = date("d M Y");
-		$data = array();
-		foreach ($_FILES as $input_name => $file_data) {
-			if ($file_data['name'] !== "") {
-				$config['upload_path'] = './public/uploads/' . $current_date;
-				$config['allowed_types'] = 'pdf|docx|jpg|png';
-				$config['max_size'] = '20000';
-				$config['max_width'] = '1024';
-				$config['max_height'] = '768';
-				$this->upload->initialize($config);
-
-				if (!file_exists($config['upload_path'])) {
-					mkdir($config['upload_path'], 0777, true);
-				}
-
-				// Membuat path lengkap untuk file yang akan diunggah
-				$full_path = $config['upload_path'] . '/' . $file_data['name'];
-
-				// Memeriksa apakah file sudah ada
-				if (!file_exists($full_path)) {
-					// Jika file belum ada, lakukan proses pengunggahan
-					if ($this->upload->do_upload($input_name)) {
-						$gambar = $this->upload->data();
-
-						$data[$input_name] = array(
-							'nama' => $gambar['file_name'],
-							'path' => $gambar['full_path'],
-						);
-					} else {
-						echo 'gagal';
-						var_dump($_FILES);
-						echo $this->upload->display_errors();
-					}
-				} else {
-					// Jika file sudah ada, berikan pesan atau lakukan tindakan lain
-					echo 'File dengan nama yang sama sudah ada.';
-				}
+		if ($this->session->userdata('template')) {
+			if (!$this->session->userdata('access_token')) {
+				$this->loginGoogle();
 			}
+
+			$profile = $this->session->userdata('profile');
+
+			$template = $this->session->userdata('template');
+
+			$templates['id'] = $template;
+			$templates['data'] = $profile;
+			$this->template->load('layout/layoutOrder', 'selesai.php', $templates);
+		} else {
+			$this->session->set_flashdata('firstTemplate', 'window.onload = showWelcomePopup;');
+			redirect('instan');
 		}
-		// 	$namaPerusahaan = $_POST['namaPerusahaan'];
-		// 	$alamat = $_POST['alamat'];
-		// 	$alamat = $_POST[''];
-		// }
-		$templates['id'] = $template;
-		$templates['data'] = $profile;
-		$this->template->load('layout/layoutOrder', 'selesai.php', $templates);
 	}
 	function loginGoogle()
 	{
@@ -132,8 +204,7 @@ class Instan extends CI_Controller
 				'data' => $authUrl
 			];
 
-			echo json_encode($output);
-			return;
+			return json_encode($output);
 		}
 		if (isset($_GET["code"]) || $this->session->userdata('access_token')) {
 
@@ -154,7 +225,7 @@ class Instan extends CI_Controller
 
 				if ($profile == 'error') {
 					$this->session->unset_userdata('access_token');
-					$this->session->set_flashdata('error','gagal');
+					$this->session->set_flashdata('error', 'gagal');
 					header('location:' . base_url('checkout'));
 				} else {
 					$this->session->set_userdata('profile', $profile);
@@ -168,7 +239,9 @@ class Instan extends CI_Controller
 		$this->session->unset_userdata('access_token');
 		$this->session->unset_userdata('getUrl');
 		$this->session->unset_userdata('user_data');
-		session_destroy();
+		$this->session->unset_userdata('copywriting');
+		$this->session->unset_userdata('data_perusahaan');
+		$this->session->unset_userdata('template');
 
 		$referer = $this->agent->referrer();
 
@@ -179,7 +252,8 @@ class Instan extends CI_Controller
 	{
 	}
 
-	function login() {
+	function login()
+	{
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 

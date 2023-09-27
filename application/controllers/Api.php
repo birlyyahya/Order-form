@@ -18,14 +18,22 @@ class Api extends CI_Controller
 
         $domain = $this->input->post('domain');
 
+        // $domain = $this->input->get('domain');
         $data = $this->M_api->getDomain($domain);
 
-        echo $data;
+        $output = [
+            'result' => $data['result'],
+            'status' => $data['status'],
+            'register' => $data['register'][1],
+            'transfer' => $data['transfer'][1],
+            'renew' => $data['renew'][1],
+        ];
+
+        echo json_encode($output);
     }
 
     function getClientDetails()
     {
-        // $email = $this->input->post('email');
         $email = $_GET['email'];
         $data = $this->M_api->getClientDetails($email);
 

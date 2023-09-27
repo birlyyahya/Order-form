@@ -46,7 +46,7 @@
 
 
 <!-- main content -->
-<form action="<?= base_url('checkout/')?>" method="POST" enctype="multipart/form-data">
+<form action="<?= base_url('instan/submit') ?>" method="POST" enctype="multipart/form-data">
     <div class="grid grid-cols-1 md:grid-cols-2 space-x-5 mt-10">
         <div class="flex flex-col">
             <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8 md:p-8 mb-8 shadow-md">
@@ -56,7 +56,7 @@
                 ?>
                     <div class="mb-6">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Konten <?= $value ?></label>
-                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input_<?= $value ?>" type="file" name="file_<?=$value?>">
+                        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input_<?= $value ?>" type="file" name="file_<?= $value ?>">
                         <span class="text-sm text-gray-500">*Format docx, PDF, atau JPG/PNG</span>
                     </div>
                 <?php
@@ -69,41 +69,68 @@
                 <div class="mb-4">
                     <label for="namaperusahaan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Perusahaan</label>
                     <input type="namaperusahaan" name="namaPerusahaan" id="namaPerusahaan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('namaPerusahaan'); ?>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="alamat" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Alamat</label>
-                    <input type="alamat" name="alamat" id="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <input type="address" name="alamat" id="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('alamat'); ?>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="negara" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Negara</label>
                     <select id="negara" name="negara" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option>Pilih Negara</option>
                     </select>
+                    <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('negara'); ?>
+                    </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2">
                     <div class="mb-4 mr-4">
                         <label for="provinsi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Provinsi</label>
-                        <input type="provinsi" name="provinsi" id="provinsi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="provinsi" autocomplete="address-level1" name="provinsi" id="provinsi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('provinsi'); ?>
+                    </div>
                     </div>
                     <div class="mb-4">
                         <label for="kota" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kota</label>
                         <input type="kota" name="kota" id="kota" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('kota'); ?>
+                    </div>
                     </div>
                     <div class="mb-4 mr-4">
                         <label for="kodepos" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Pos</label>
-                        <input type="text" id="kodepos" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="text" name="kodepos" id="kodepos" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('kodepos'); ?>
+                    </div>
                     </div>
                     <div class="mb-4">
                         <label for="telepon" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Telepon</label>
-                        <input type="telepon" id="telepon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="telepon" name="telepon" id="telepon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <div class="text-sm text-red-600 py-2 font-semibold">
+                            <?php echo form_error('telepon'); ?>
+                        </div>
                     </div>
                     <div class="mb-4 mr-4">
                         <label for="fax" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fax</label>
-                        <input type="text" id="fax" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="text" id="fax" name="fax" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <div class="text-sm text-red-600 py-2 font-semibold">
+                            <?php echo form_error('fax'); ?>
+                        </div>
                     </div>
                     <div class="mb-4">
                         <label for="emailPerusahaan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input type="email" id="emailPerusahaan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="email" autocomplete="email" id="emailPerusahaan" name="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <div class="text-sm text-red-600 py-2 font-semibold">
+                            <?php echo form_error('email'); ?>
+                        </div>
                     </div>
                 </div>
                 <label for="website-admin" class="block my-4 text-sm font-medium text-gray-900 dark:text-white">Media Sosial</label>
@@ -116,6 +143,9 @@
                         </span>
                         <input type="text" id="website-facebook" name="facebook" class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Facebook">
                     </div>
+                    <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('facebook'); ?>
+                    </div>
                 </div>
                 <div class="mb-3">
                     <div class="flex">
@@ -125,6 +155,9 @@
                             </svg>
                         </span>
                         <input type="text" id="website-instagram" name="instagram" class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Instagram">
+                    </div>
+                    <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('instagram'); ?>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -136,6 +169,9 @@
                             </svg>
                         </span>
                         <input type="text" id="website-linkedin" name="linkedin" class="rounded-none rounded-r-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Linkedin">
+                    </div>
+                    <div class="text-sm text-red-600 py-2 font-semibold">
+                        <?php echo form_error('linkedin'); ?>
                     </div>
                 </div>
             </div>
