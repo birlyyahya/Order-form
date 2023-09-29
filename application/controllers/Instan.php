@@ -34,15 +34,18 @@ class Instan extends CI_Controller
 	}
 	public function konten()
 	{
+		include('Template.php');
 		$this->session->unset_userdata('data_perusahaan');
 		$this->session->unset_userdata('susunmenu');
-		$this->session->set_userdata('template', $_POST['template']);
-		
+
+
+		$hasil = $template[$_POST['template']];
+
+		$this->session->set_userdata('template', $hasil);
+
 		if (empty($this->session->userdata('template'))) {
 			$this->session->set_flashdata('firstTemplate', 'window.onload = showWelcomePopup;');
 			redirect('instan');
-		} else {
-			var_dump($this->session->userdata('template'));
 		}
 		$this->template->load('layout/layoutOrder', 'konten.php',);
 	}
@@ -163,6 +166,8 @@ class Instan extends CI_Controller
 	public function selesai()
 	{
 
+		print_r($_SESSION);
+
 		if ($this->session->userdata('template')) {
 			if (!$this->session->userdata('access_token')) {
 				$this->loginGoogle();
@@ -174,12 +179,17 @@ class Instan extends CI_Controller
 
 			$templates['id'] = $template;
 			$templates['data'] = $profile;
+
+			if ($this->session->userdata('data_perusahaan') === 'kuisioner') {
+				$templates['totals'] = $template['pricing'] + 250000;
+			};
 			$this->template->load('layout/layoutOrder', 'selesai.php', $templates);
 		} else {
 			$this->session->set_flashdata('firstTemplate', 'window.onload = showWelcomePopup;');
 			redirect('instan');
 		}
 	}
+
 	function loginGoogle()
 	{
 		$google_client = new Google_Client();
@@ -242,24 +252,46 @@ class Instan extends CI_Controller
 		$this->session->unset_userdata('copywriting');
 		$this->session->unset_userdata('data_perusahaan');
 		$this->session->unset_userdata('template');
+		$this->session->unset_userdata('profile');
 
 		$referer = $this->agent->referrer();
 
 		redirect($referer);
 	}
-
-	function checkout()
+	function logoutLogin()
 	{
+		$this->session->unset_userdata('profile');
+		return 'berhasil';
 	}
 
-	function login()
+	function checkoutSubmit()
+	{
+		print_r($_POST);
+		print_r($_SESSION);
+		if($_POST['default-radio'] === 'login'){
+
+			$data = [
+				'userid' => $_POST['userid'],
+				'pid' => $this->session->userdata('template')['id'],
+				'domain' => $this->session->userdata('domain')['domain'],
+			]
+			$domain = $this->session->userdata('domain')['domain'];
+			$domaintype = $this->session->userdata('domain')['type'];
+			
+		};
+	}
+	function doLogin()
 	{
 		$email = $_POST['email'];
 		$password = $_POST['password'];
 
+		$this->load->model('M_api');
 
-		$output = $this->M_api->login($email, $password);
+		$output = $this->M_api->loginClient($email, $password);
 
-		echo $output;
+		if ($output['result'] !== 'error') {
+            $this->session->set_userdata('profile', $output);
+        }
+		echo json_encode($output);
 	}
 }

@@ -64,18 +64,37 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
                 </svg>
             </button>
-            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul class="text-sm flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                    <li>
-                        <a href="https://web.dewahoster.co.id/login" class="login bg-gray-800">
-                            <div class="sign-login"><svg viewBox="0 0 14 18" class="w-5 h-5">
-                                    <path d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"></path>
-                                </svg></div>
-                            <div class="pl-3 text-login text-sm">Login</div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+            <?php if (empty($this->session->userdata('profile'))) { ?>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                    <ul class="text-sm flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        <li id="loginClient">
+                            <a href="https://web.dewahoster.co.id/login" class="login bg-blue-500">
+                                <div class="sign-login"><svg viewBox="0 0 14 18" class="w-5 h-5">
+                                        <path d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"></path>
+                                    </svg></div>
+                                <div class="pl-3 text-login text-sm">Login</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            <?php
+            } else {
+            ?>
+                <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+                    <ul class="text-sm flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        <li id="loginClient">
+                            <a class="login bg-yellow-500" onclick="logoutLogin(this)">
+                                <div class="sign-login"><svg viewBox="0 0 14 18" class="w-5 h-5">
+                                        <path d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"></path>
+                                    </svg></div>
+                                <div class="pl-3 text-login text-sm md:text-md">Logout</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            <?php
+            }
+            ?>
         </div>
     </nav>
     <!-- End Navbar -->
@@ -249,6 +268,38 @@
 
 
 <script>
+    document.addEventListener("DOMContentLoaded", function(e) {
+        var radio1 = document.getElementById("default-radio-1");
+        var radio2 = document.getElementById("default-radio-2");
+        var loginForm = document.querySelectorAll("#loginForm input");
+        var registerForm = document.querySelectorAll("#registerForm input");
+        registerForm.forEach(function(input) {
+            input.setAttribute("disabled", "disabled");
+        });
+        radio1.addEventListener("change", function() {
+            if (radio1.checked) {
+                registerForm.forEach(function(input) {
+                    input.setAttribute("disabled", "disabled");
+                });
+                loginForm.forEach(function(input) {
+                    input.removeAttribute("disabled");
+                });
+                // Menonaktifkan elemen-elemen dalam registerForm
+            }
+        });
+
+        radio2.addEventListener("change", function() {
+            if (radio2.checked) {
+                registerForm.forEach(function(input) {
+                    input.removeAttribute("disabled");
+                });
+                loginForm.forEach(function(input) {
+                    input.setAttribute("disabled", "disabled");
+                });
+            }
+        });
+    });
+
     function showWelcomePopup() {
         Swal.fire({
             icon: 'error',
@@ -262,43 +313,93 @@
 
     function loadingButton(element) {
         // const loading = document.getElementById('google-sign-in');
-        element.innerHTML = ` <svg aria-hidden="true" role="status" class="inline w-4 h-4  text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+        element.innerHTML = ` <svg aria-hidden="true" role="status" class="inline w- h-5 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
     <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
     </svg>`;
     }
-    document.getElementById('login_google').addEventListener('click', function(e) {
-        e.preventDefault();
-        // Mengambil nilai input email dan password
+
+    function validateForm() {
+        // Lakukan validasi formulir di sini, misalnya:
         var email = $("#emailLogin").val();
         var password = $("#passwordLogin").val();
 
-        // Melakukan pengiriman data ke fungsi login menggunakan AJAX
-        $.ajax({
-            type: "POST",
-            url: '<?= base_url('instan/login') ?>', // Ganti dengan URL Anda
-            data: {
-                email: email,
-                password: password,
-            },
-            dataType: 'json',
-            success: function(response) {
-                // Callback yang akan dijalankan setelah respons selesai
-                console.log(response);
-                if (response) {
-                    // Respons berhasil, Anda dapat melakukan tindakan sesuai kebutuhan
-                    alert("Login berhasil!");
-                } else {
-                    // Respons gagal atau ada kesalahan, tampilkan pesan kesalahan atau lakukan tindakan lain
-                    alert("Login gagal: " + response.error);
-                }
-            },
-            error: function(xhr, status, error) {
-                // Penanganan kesalahan AJAX jika diperlukan
-                console.error(xhr, status, error);
-            },
+        if (email === "" || password === "") {
+            // Tampilkan pesan kesalahan atau lakukan tindakan lain
+            alert("Silakan isi semua kolom");
+            return false;
+        }
+
+        // Lanjutkan dengan validasi lain yang Anda butuhkan
+        return true;
+    }
+    <?php if (!$this->session->userdata('profile')) {
+    ?>
+        document.getElementById('login_google').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Mengambil nilai input email dan password
+
+
+            var email = $("#emailLogin").val();
+            var password = $("#passwordLogin").val();
+
+            if (!validateForm()) {
+                // Form tidak valid, berhenti di sini atau tampilkan pesan kesalahan
+                return;
+            }
+            var loginGoogleElement = document.getElementById('login_google');
+            var loginPanel = document.getElementById('loginPanel');
+            const loginClientPanel = document.getElementById('loginClient');
+            const buttonCheckout = document.getElementById('checkout');
+
+            buttonCheckout.removeAttribute('disabled');
+            buttonCheckout.nextElementSibling.remove();
+            loadingButton(loginGoogleElement);
+            // Melakukan pengiriman data ke fungsi login menggunakan AJAX
+            $.ajax({
+                type: "POST",
+                url: '<?= base_url('instan/doLogin') ?>', // Ganti dengan URL Anda
+                data: {
+                    email: email,
+                    password: password,
+                },
+                dataType: 'json',
+                success: function(response) {
+                    // Callback yang akan dijalankan setelah respons selesai
+                    loginGoogleElement.innerHTML = 'Login';
+                    if (response['result'] !== 'error') {
+                        loginClientPanel.innerHTML = `<a class="login bg-yellow-500" onclick="logoutLogin(this)">
+                                <div class="sign-login"><svg viewBox="0 0 14 18" class="w-5 h-5">
+                                        <path d="M7 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm2 1H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"></path>
+                                    </svg></div>
+                                <div class="pl-3 text-login text-sm md:text-md">Logout</div>
+                            </a>`;
+
+                        loginForm.innerHTML = `
+                        <p class="text-md text-gray-500 font-normal">` + response['fullname'] + `</p>
+                            <p class="text-md text-gray-500 font-normal">` + response['address'] + `</p>
+                            <p class="text-md text-gray-500 font-normal">` + response['city'] + `,` + response['state'] + `</p>
+                            <p class="text-md text-gray-500 font-normal">` + response['country'] + `</p>
+                            <p class="text-md text-gray-500 font-normal">` + response['phonenumber'] + `</p>
+                        `;
+                        // Respons berhasil, Anda dapat melakukan tindakan sesuai kebutuhan
+                    } else {
+                        // Respons gagal atau ada kesalahan, tampilkan pesan kesalahan atau lakukan tindakan lain
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: response['message'],
+                        })
+                    }
+
+                },
+                error: function(xhr, status, error) {
+                    // Penanganan kesalahan AJAX jika diperlukan
+                    console.error(xhr, status, error);
+                },
+            });
         });
-    });
+    <?php } ?>
 
     <?php if (!$this->session->userdata('getUrl')) {
     ?>
@@ -328,6 +429,30 @@
         });
     <?php
     } ?>
+
+    function logoutLogin(element) {
+        $.ajax({
+            url: "<?php echo base_url('instan/logoutLogin'); ?>", // Ganti dengan URL yang sesuai
+            type: 'POST',
+            success: function(response) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Logout',
+                    width: '200px',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(function() {
+                    location.reload();
+                });
+            },
+            error: function(xhr, status, error) {
+                // Penanganan kesalahan AJAX jika diperlukan
+                console.error(xhr, status, error);
+            }
+        });
+    }
+
     // Menambahkan event listener untuk input pencarian
     btnDaftarDomain.forEach(function(btnDomain) {
         btnDomain.addEventListener('click', function() {
@@ -353,21 +478,22 @@
 
             getIdCategory = btnDomain.getAttribute('aria-labelledby');
 
-            if (getIdCategory === "daftardomain-tab") {
+            if (getIdCategory === "register") {
+                loadingButton(btnDomain);
                 eppAuth.style.display = 'none';
                 if (/\.[a-zA-Z]+$/.test(searchValue)) {
                     loadingDiv.style.display = 'block';
-                    loadingButton(btnDomain);
                     $.ajax({
                         type: "POST", // Metode HTTP yang digunakan (POST)
                         url: "<?php echo base_url('api/getDomain'); ?>", // URL controller CI3
                         data: {
-                            domain: searchValue
+                            domain: searchValue,
+                            type: getIdCategory
                         }, // Data yang akan dikirim
                         dataType: "json", // Tipe data yang diharapkan dalam respons (JSON)
                         success: function(response) {
 
-                            btnDomain.innerHTML='Cari';
+                            btnDomain.innerHTML = 'Cari';
                             // Tangani respons dari controller di sini
                             console.log(response); // Contoh: Cetak respons ke konsol
 
@@ -397,8 +523,7 @@
 
                             strongElement.innerHTML = '<strong>' + searchValue + '</strong> is available! ';
                             strongElement.nextElementSibling.innerHTML = IDR + "<sub>/yr</sub>";
-                            addCartDomain.setAttribute('onclick', 'addOrder("' + searchValue + '","' + IDR + '")');
-
+                            addCartDomain.setAttribute('onclick', 'addOrder("' + searchValue + '","' + response['register'] + '")');
                             // Hilangkan loading
                             loadingDiv.style.display = 'none';
                             // Hilangkang result unvalid
@@ -409,7 +534,7 @@
                             return;
                         },
                         error: function(xhr, status, error) {
-
+                            btnDomain.innerHTML = 'Cari';
                             console.log("Kegagalan permintaan: " + status + " - " + error);
                             const strongElement = resultDivNonValid.querySelector('#namadomain strong');
                             strongElement.textContent = searchValue;
@@ -429,10 +554,10 @@
                 } else {
                     const strongElement = resultDivNonValid.querySelector('#namadomain strong');
                     strongElement.textContent = searchValue;
-                    btnDomain.innerHTML='Cari';
 
                     loadingDiv.style.display = 'block';
 
+                    btnDomain.innerHTML = 'Cari';
                     setTimeout(function() {
                         // Sembunyikan tampilan loading
                         loadingDiv.style.display = 'none';
@@ -444,20 +569,21 @@
                 }
 
 
-            } else if (getIdCategory === "transferdomain-tab") {
+            } else if (getIdCategory === "transfer") {
+                loadingButton(btnDomain);
                 if (/\.[a-zA-Z]+$/.test(searchValue)) {
                     loadingDiv.style.display = 'block';
-                    loadingButton(btnDomain);
                     // Memperbarui teks dalam elemen <h2><strong>
                     $.ajax({
                         type: "POST", // Metode HTTP yang digunakan (POST)
                         url: "<?php echo base_url('api/getDomain'); ?>", // URL controller CI3
                         data: {
-                            domain: searchValue
+                            domain: searchValue,
+                            type: getIdCategory
                         }, // Data yang akan dikirim
                         dataType: "json", // Tipe data yang diharapkan dalam respons (JSON)
                         success: function(response) {
-                            btnDomain.innerHTML='Cari';
+                            btnDomain.innerHTML = 'Cari';
                             // Tangani respons dari controller di sini
                             console.log(response); // Contoh: Cetak respons ke konsol
 
@@ -487,7 +613,7 @@
 
                             strongElement.innerHTML = '<strong>' + searchValue + '</strong> memenuhi syarat untuk ditransfer';
                             strongElement.nextElementSibling.innerHTML = IDR + "<sub>/yr</sub>";
-                            addCartDomain.setAttribute('onclick', 'addOrder("' + searchValue + '","' + IDR + '")');
+                            addCartDomain.setAttribute('onclick', 'addOrder("' + searchValue + '","' + response['transfer'] + '")');
 
                             // Hilangkan loading
                             loadingDiv.style.display = 'none';
@@ -507,7 +633,7 @@
                 } else {
                     const strongElement = resultDivNonValid.querySelector('#namadomain strong');
                     strongElement.textContent = searchValue;
-                    btnDomain.innerHTML='Cari';
+                    btnDomain.innerHTML = 'Cari';
 
                     loadingDiv.style.display = 'block';
 
@@ -520,9 +646,10 @@
                         resultDivNonValid.style.display = 'block';
                     }, 2000);
                 }
-            } else if (getIdCategory === "hostingsaja-tab") {
+            } else if (getIdCategory === "hosting") {
                 eppAuth.style.display = 'none';
                 loadingButton(btnDomain);
+                console.log(getIdCategory);
                 if (/\.[a-zA-Z]+$/.test(searchValue)) {
 
                     // Tampilkan tampilan loading
@@ -531,11 +658,12 @@
                         type: "POST", // Metode HTTP yang digunakan (POST)
                         url: "<?php echo base_url('api/getDomain'); ?>", // URL controller CI3
                         data: {
-                            domain: searchValue
+                            domain: searchValue,
+                            type: getIdCategory
                         }, // Data yang akan dikirim
                         dataType: "json", // Tipe data yang diharapkan dalam respons (JSON)
                         success: function(response) {
-                            btnDomain.innerHTML='Cari';
+                            btnDomain.innerHTML = 'Cari';
                             // Tangani respons dari controller di sini
                             console.log(response); // Contoh: Cetak respons ke konsol
 
@@ -558,12 +686,14 @@
                             // Memperbarui teks dalam elemen <h2><strong>
                             const strongElement = resultDiv.querySelector('#namadomain');
 
-                            var IDR = '-';
 
                             strongElement.innerHTML = '<strong>' + searchValue + '</strong> berhasil digunakan';
                             thirdElement = strongElement.nextElementSibling;
                             hiddenButton = thirdElement.nextElementSibling;
-                            addOrder(searchValue, IDR);
+
+                            var pricing = 0;
+
+                            addOrder(searchValue, pricing);
                             if (hiddenButton) {
                                 hiddenButton.classList.add('hidden');
                             }
@@ -578,7 +708,7 @@
                             return;
                         },
                         error: function(xhr, status, error) {
-                            btnDomain.innerHTML='Cari';
+                            btnDomain.innerHTML = 'Cari';
                             console.log("Kegagalan permintaan: " + status + " - " + error);
                         }
                     });
@@ -591,6 +721,7 @@
 
                     // Simulasikan proses loading
                     setTimeout(function() {
+                        btnDomain.innerHTML = 'Cari';
                         // Sembunyikan tampilan loading
                         loadingDiv.style.display = 'none';
                         resultDiv.style.display = 'none';
@@ -605,10 +736,5 @@
         });
     });
 </script>
-
-
-
-
-
 
 </html>

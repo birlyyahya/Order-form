@@ -47,7 +47,7 @@
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 <?php
                 foreach ($data as $key => $value) { ?>
-                    <div id="<?= $value['name'].'-'.$value['id'] ?>" onclick="getImage(this)" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="relative group rounded" data-preview="<?= $value['link'] ?>">
+                    <div id="<?= $key ?>" onclick="getImage(this)" data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="relative group rounded" data-preview="<?= $value['link'] ?>">
                         <div id="gradient-background" class="w-full h-full absolute top-0 left-0 z-0"></div>
                         <img class="h-auto max-w-full rounded-lg cursor-pointer shadow-md " style="z-index: 99;" src="<?= $value['img'] ?>" alt="">
                         <div id="icon-template" class="absolute hidden inset-0 flex items-center justify-center text-green-500 opacity-100 transition duration-300">

@@ -384,7 +384,7 @@ $config['encryption_key'] = '';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'ci_session';
+$config['sess_cookie_name'] = 'websiteInstanDewahoster';
 $config['sess_samesite'] = 'Lax';
 $config['sess_expiration'] = 7200;
 $config['sess_save_path'] = NULL;
@@ -441,7 +441,7 @@ $config['standardize_newlines'] = FALSE;
 |          for backwards compatibility purposes!
 |
 */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = true;
 
 /*
 |--------------------------------------------------------------------------

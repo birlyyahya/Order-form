@@ -52,7 +52,7 @@ class M_api extends CI_Model
         $pricing = json_decode($this->getTLDPricing($domain), true);
         $domainWhois = array_merge($data, $pricing);
 
-        return json_encode($domainWhois);
+        return $domainWhois;
     }
     function getTLDPricing($domain)
     {
@@ -154,7 +154,7 @@ class M_api extends CI_Model
         }
     }
 
-    function login($email, $password)
+    function loginClient($email, $password)
     {
         $body = [
             'form_params' => [
@@ -179,146 +179,146 @@ class M_api extends CI_Model
         $body = $response->getBody();
         $data = json_decode($body);
 
-        return json_encode($data);
 
-        // if ($data->result !== 'error') {
-        //     //get Client ID
-        //     $body = [
-        //         'form_params' => [
-        //             'action' => 'GetClients',
-        //             'identifier' => $this->identifier,
-        //             'secret' => $this->secret,
-        //             'search' => $email,
-        //             'responsetype' => 'json'
-        //         ]
-        //     ];
+        if ($data->result !== 'error') {
+            //get Client ID
+            $body = [
+                'form_params' => [
+                    'action' => 'GetClients',
+                    'identifier' => $this->identifier,
+                    'secret' => $this->secret,
+                    'search' => $email,
+                    'responsetype' => 'json'
+                ]
+            ];
+            $client = new GuzzleClient([
+                'base_uri' => $this->urlsite,
+            ]);
 
-        //     $client = new GuzzleClient([
-        //         'base_uri' => $this->urlsite,
-        //     ]);
+            $response = $client->post(
+                'includes/api.php',
+                $body
+            );
 
-        //     $response = $client->post(
-        //         'includes/api.php',
-        //         $body
-        //     );
+            $clientID = $response->getBody();
+            $clientID = json_decode($clientID);
+            $clientID = $clientID->clients->client[0]->id;
 
-        //     $clientID = $response->getBody();
-        //     $clientID = json_decode($clientID);
-        //     $clientID = $clientID->clients->client[0]->id;
+            // getclientdetails
+            $body3 = [
+                'form_params' => [
+                    'action' => 'GetClientsDetails',
+                    'identifier' => $this->identifier,
+                    'secret' => $this->secret,
+                    'clientid' => $clientID,
+                    'stats' => true,
+                    'responsetype' => 'json'
+                ]
+            ];
 
-        //     // getclientdetails
-        //     $body3 = [
-        //         'form_params' => [
-        //             'action' => 'GetClientsDetails',
-        //             'identifier' => $this->identifier,
-        //             'secret' => $this->secret,
-        //             'clientid' => $clientID,
-        //             'stats' => true,
-        //             'responsetype' => 'json'
-        //         ]
-        //     ];
+            $client = new GuzzleClient([
+                'base_uri' => $this->urlsite,
+            ]);
 
-        //     $client = new GuzzleClient([
-        //         'base_uri' => $this->urlsite,
-        //     ]);
+            $response = $client->post(
+                'includes/api.php',
+                $body3
+            );
 
-        //     $response = $client->post(
-        //         'includes/api.php',
-        //         $body3
-        //     );
+            $body3 = $response->getBody();
+            $tmp['result'] = json_decode($body3)->result;
+            $tmp['fullname'] = json_decode($body3)->fullname;
+            $tmp['email'] = json_decode($body3)->email;
+            $tmp['userid'] = json_decode($body3)->client_id;
+            $tmp['address'] = json_decode($body3)->address1;
+            $tmp['city'] = json_decode($body3)->city;
+            $tmp['state'] = json_decode($body3)->state;
+            $tmp['country'] = json_decode($body3)->country;
+            $tmp['phonenumber'] = json_decode($body3)->phonenumber;
+            $data = $tmp;
+        }
 
-        //     $body3 = $response->getBody();
-        //     $tmp['fullname'] = json_decode($body3)->fullname;
-        //     $tmp['email'] = json_decode($body3)->email;
-        //     $tmp['userid'] = json_decode($body3)->client_id;
-
-        //     return $tmp;
+        return $data;
     }
 
-    function addUser() {
-        
+    function addUser($firstname, $lastname, $email, $address, $city, $state, $postcode, $country, $phonenumber, $password, $survey, $akuninfo)
+    {
+        $customFields = [
+            [
+                'name' => 'survey',
+                'value' => $akuninfo
+            ], [
+                'name' => 'akuninfo',
+                'value' => $akuninfo,
+            ]
+        ];
+
+        $body = [
+            'form_params' => [
+                'action' => 'AddClient',
+                'identifier' => $this->identifier,
+                'secret' => $this->secret,
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'email' => $email,
+                'address1' => $address,
+                'city' => $city,
+                'state' => $state,
+                'postcode' => $postcode,
+                'country' => $country,
+                'phonenumber' => $phonenumber,
+                'password2' => $password,
+                'customFields' => base64_encode(json_encode($customFields)),
+                'responsetype' => 'json'
+            ]
+        ];
+
+        $client = new GuzzleClient([
+            'base_uri' => $this->urlsite,
+        ]);
+
+        $response = $client->post(
+            'includes/api.php',
+            $body
+        );
+
+        $body = $response->getBody();
+        $data = json_decode($body);
+
+        return $data;
     }
+    function addOrder($clientid, $pid, $domain, $domaintype, $eppCode, $paymentmethod, $idProtection)
+    {
+        $body = [
+            'form_params' => [
+                'action' => 'AddOrder',
+                'identifier' => $this->identifier,
+                'secret' => $this->secret,
+                'clientid' => $clientid,
+                'pid' => $pid,
+                'domain' => $domain,
+                'idnlanguage' => array(''),
+                'billingcycle' => 'annually',
+                'domaintype' => $domaintype,
+                'regperiod' => 1,
+                'dnsmanagement' => 0,
+                'nameserver1' => 'ns1.dewahoster.com',
+                'nameserver2' => 'ns2.dewahoster.com',
+                'eppCode' => $eppCode,
+                'paymentmethod' => $paymentmethod,
+                'idprotection' => $idProtection,
+                'responsetype' => 'json',
+            ]
+        ];
 
+        $client = new GuzzleClient([
+            'base_uri' => $this->urlsite,
+        ]);
 
+        $body = $client->getBody();
 
-    // function getUrlLogin()
-    // {
-    //     $google_client = new Google_Client();
+        $data = json_decode($body);
 
-    //     $google_client->setClientId($this->google_key); //Define your ClientID
-
-    //     $google_client->setClientSecret($this->google_secret); //Define your Client Secret Key
-
-    //     $google_client->setRedirectUri('http://localhost:8080/orderform/checkout'); //Define your Redirect Uri
-
-    //     $google_client->addScope('email');
-
-    //     $google_client->addScope('profile');
-
-
-
-
-    //     echo json_encode($authUrl);
-    // }
-
-
-
-
-
-    // function getProvinsi()
-    // {
-    //     $curl = curl_init();
-
-    //     curl_setopt_array($curl, array(
-    //         CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
-    //         CURLOPT_RETURNTRANSFER => true,
-    //         CURLOPT_ENCODING => "",
-    //         CURLOPT_MAXREDIRS => 10,
-    //         CURLOPT_TIMEOUT => 30,
-    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //         CURLOPT_CUSTOMREQUEST => "GET",
-    //         CURLOPT_HTTPHEADER => array(
-    //             'key: '. $this->api_key
-    //         ),
-    //     ));
-
-    //     $response = curl_exec($curl);
-    //     $err = curl_error($curl);
-
-    //     curl_close($curl);
-
-    //     if ($err) {
-    //         echo "cURL Error #:" . $err;
-    //     } else {
-    //         echo $response;
-    //     }
-    // }
-    // function getKota($id)
-    // {
-    //     $curl = curl_init();
-
-    //     curl_setopt_array($curl, array(
-    //         CURLOPT_URL => "https://api.rajaongkir.com/starter/city?province=".$id,
-    //         CURLOPT_RETURNTRANSFER => true,
-    //         CURLOPT_ENCODING => "",
-    //         CURLOPT_MAXREDIRS => 10,
-    //         CURLOPT_TIMEOUT => 30,
-    //         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //         CURLOPT_CUSTOMREQUEST => "GET",
-    //         CURLOPT_HTTPHEADER => array(
-    //             'key: '. $this->api_key
-    //         ),
-    //     ));
-
-    //     $response = curl_exec($curl);
-    //     $err = curl_error($curl);
-
-    //     curl_close($curl);
-
-    //     if ($err) {
-    //         echo "cURL Error #:" . $err;
-    //     } else {
-    //         echo $response;
-    //     }
-    // }
+        return $data;
+    }
 }

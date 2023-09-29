@@ -6,17 +6,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Api extends CI_Controller
 {
 
-
-
     public function __construct()
     {
         parent::__construct();
         $this->load->model('M_api');
     }
+
+    function reset()
+    {
+        session_destroy();
+    }
+
     function getDomain()
     {
-
         $domain = $this->input->post('domain');
+        $type = $this->input->post('type');
+
+        if ($type === 'hosting') {
+            $type = 'renew';
+        };
 
         // $domain = $this->input->get('domain');
         $data = $this->M_api->getDomain($domain);
@@ -24,11 +32,14 @@ class Api extends CI_Controller
         $output = [
             'result' => $data['result'],
             'status' => $data['status'],
-            'register' => $data['register'][1],
-            'transfer' => $data['transfer'][1],
-            'renew' => $data['renew'][1],
+            $type => $data[$type][1],
         ];
-
+        $session = [
+            'domain' => $domain,
+            'type' => $type,
+            'price' => $data[$type][1],
+        ];
+        $this->session->set_userdata('domain',$session);
         echo json_encode($output);
     }
 
@@ -36,7 +47,6 @@ class Api extends CI_Controller
     {
         $email = $_GET['email'];
         $data = $this->M_api->getClientDetails($email);
-
         print_r($data);
     }
 
@@ -45,10 +55,14 @@ class Api extends CI_Controller
         $email = $_GET['email'];
         $password = $_GET['password'];
 
+        $output = $this->M_api->loginClient($email, $password);
 
-        $output = $this->M_api->login($email, $password);
-
-        echo $output;
+        if (!empty($output->fullname)) {
+            
+            $this->session->set_userdata('profile', $output);
+            echo json_encode($output);
+        }
+        echo json_encode($output);
     }
 
 

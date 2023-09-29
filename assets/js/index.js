@@ -1,18 +1,21 @@
-const buttonLanjutkan = document.querySelectorAll('#button-lanjutkan');
-const pilihTemplateButton = document.getElementById('pilih-template');
+const buttonLanjutkan = document.querySelectorAll("#button-lanjutkan");
+const pilihTemplateButton = document.getElementById("pilih-template");
 // Mendapatkan elemen-elemen yang diperlukan
-const searchInput = document.querySelectorAll('default-search');
-const loadingDiv = document.getElementById('loading-domain');
-const myTab = document.getElementById('myTab');
-const resultDiv = document.getElementById('result-domain');
-const btnDaftarDomain = document.querySelectorAll('.btn-daftar-domain');
-const resultDivNonValid = document.getElementById('result-domain-nonvalid');
-const addCartDomain = document.getElementById('add-cart-domain');
-const tabs = document.querySelectorAll('[data-tabs-target]');
-const resultDivs = document.querySelectorAll('#result-domain');
-const eppAuth = document.getElementById('epp-auth');
+const searchInput = document.querySelectorAll(".default-search");
+const loadingDiv = document.getElementById("loading-domain");
+const myTab = document.getElementById("myTab");
+const resultDiv = document.getElementById("result-domain");
+const btnDaftarDomain = document.querySelectorAll(".btn-daftar-domain");
+const resultDivNonValid = document.getElementById("result-domain-nonvalid");
+const addCartDomain = document.getElementById("add-cart-domain");
+const tabs = document.querySelectorAll("[data-tabs-target]");
+const resultDivs = document.querySelectorAll("#result-domain");
+const eppAuth = document.getElementById("epp-auth");
+
 
 let activeTab = null;
+
+
 
 function getImage(element) {
 	const image = element.querySelector("img");
@@ -25,6 +28,22 @@ function getImage(element) {
 	pilihTemplateButton.setAttribute("onclick", 'lanjutkan("' + modal + '")');
 }
 
+document
+	.getElementById("passwordLogin")
+	.addEventListener("keydown", function (event) {
+		if (event.key === "Enter") {
+			event.preventDefault(); // Mencegah pengiriman formulir (jika ada)
+			document.getElementById("login_google").click(); // Memicu klik pada tombol "Cari"
+		}
+	});
+document
+	.getElementById("emailLogin")
+	.addEventListener("keydown", function (event) {
+		if (event.key === "Enter") {
+			event.preventDefault(); // Mencegah pengiriman formulir (jika ada)
+			document.getElementById("login_google").click(); // Memicu klik pada tombol "Cari"
+		}
+	});
 function lanjutkan(modal) {
 	const gradientBackgrounds = document.querySelectorAll("#gradient-background");
 	const iconTemplates = document.querySelectorAll("#icon-template");
@@ -96,40 +115,104 @@ if (tabs.length > 0) {
 	tabs[0].click();
 }
 
+function formatIDR(price) {
+	price = Intl.NumberFormat("id-ID", {
+		style: "currency",
+		currency: "IDR",
+	}).format(price);
+	return price.replace(/\,00$/, "");
+}
+
+function disableTab(element) {
+	var tab = document.querySelectorAll('[role="tab"]');
+
+	if (element === "true") {
+		tab.forEach(function (tabs) {
+			tabs.setAttribute("disabled", element);
+		});
+	} else {
+		tab.forEach(function (tabs) {
+			tabs.removeAttribute("disabled");
+		});
+	}
+}
+
 function addOrder(kategori, pricing) {
 	var orderList = document.querySelector(".list-orders");
 
+	btnDaftarDomain.forEach((element) => {
+		element.setAttribute("disabled", true);
+	});
+	searchInput.forEach((element) => {
+		element.setAttribute("disabled", true);
+	});
 	var orderItems = document.createElement("li");
 	orderItems.className = "grid grid-cols-2 gap-4  mt-0 items-order-domain";
-	orderItems.innerHTML =
-		` <div class=" justify-center border-b-1" style="overflow-wrap:anywhere;">
-                    <span id="order-title" class="text-gray-50 text-md font-semi-bold mr-1">` +
-		kategori +
-		`</span>
-                </div>
-                <div class="pt-1 text-right">
-                    <span id="order-price" class="text-gray-50 font-semibold inline-block">` +
-		pricing +
-		`</span>
-                </div>`;
+
+	if (pricing === 0) {
+		orderItems.innerHTML =
+			` <div class=" justify-center border-b-1" style="overflow-wrap:anywhere;">
+                        <span id="order-title" class="text-gray-50 text-md font-semi-bold mr-1">` +
+			kategori +
+			`</span>
+                    </div>`;
+	} else {
+		var IDR = formatIDR(pricing);
+		orderItems.innerHTML =
+			` <div class=" justify-center border-b-1" style="overflow-wrap:anywhere;">
+                        <span id="order-title" class="text-gray-50 text-md font-semi-bold mr-1">` +
+			kategori +
+			`</span>
+                    </div>
+                    <div class="pt-1 text-right">
+                        <span id="order-price" class="text-gray-50 font-semibold inline-block">` +
+			IDR +
+			`</span>
+                    </div>
+                    `;
+	}
+
 	orderList.appendChild(orderItems);
+
+	disableTab("true");
+
+	TotalPricing(pricing);
 
 	addCartDomain.className =
 		"text-gray-50 bg-gray-500 hover:bg-gray-300 focus:ring-4 focus:ring-gray-300 font-medium rounded-md text-sm px-5 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
 	addCartDomain.textContent = "Hapus";
 	addCartDomain.onclick = function () {
-		hapusOrder(orderItems); // Memanggil fungsi hapusOrder dengan elemen item order sebagai argumen
+		hapusOrder(orderItems, pricing); // Memanggil fungsi hapusOrder dengan elemen item order sebagai argumen
 	};
 }
 
-function hapusOrder(orderItem) {
+function TotalPricing(pricing) {
+	var getTotal = document.getElementById("order-total");
+	var inputTotal = document.querySelector("input[name='totalOrders']");
+
+	var priceTotal = parseInt(getTotal.getAttribute("value")) + parseInt(pricing);
+
+	getTotal.textContent = formatIDR(priceTotal);
+	inputTotal.value = priceTotal;
+	getTotal.setAttribute("value", priceTotal);
+}
+
+function hapusOrder(orderItem, pricing) {
 	kategori = orderItem.querySelector("#order-title");
+	TotalPricing(-pricing);
 	orderItem.remove();
+	btnDaftarDomain.forEach((element) => {
+		element.removeAttribute("disabled");
+	});
+    searchInput.forEach((element) => {
+		element.removeAttribute("disabled");
+	});
+	disableTab("false");
 	addCartDomain.className =
 		"text-blue-800 bg-blue-200 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
 	addCartDomain.textContent = "Add Cart";
 	addCartDomain.onclick = function () {
-		addOrder(kategori.textContent);
+		addOrder(kategori.textContent, pricing);
 	};
 }
 
