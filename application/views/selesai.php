@@ -46,7 +46,7 @@
 
 
 <!-- main content -->
-<form action="<?= base_url('instan/checkoutSubmit') ?>" method="POST">
+<form action="<?= base_url('instan/checkoutValidation') ?>" method="POST" id="orderForm">
     <div class="grid grid-cols-1 grid-rows-1 lg:grid-cols-3 gap-4">
         <!-- search -->
         <div class="mt-2 col-span-2 flex flex-col">
@@ -134,6 +134,19 @@
                     <h2 class=" mb-6 md:mb-0 text-2xl text-center font-bold leading-none tracking-tight text-gray-800 md:text-xl dark:text-white"></h2>
                     <button type="button" id="add-cart-domain" onclick="" class="text-blue-800 bg-blue-200 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add to cart</button>
                 </div>
+                <div class="hidden" id="idProtection">
+                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                    <div class="flex items-center">
+                        <img src="<?= base_url('assets/protectionID.png') ?>" class="w-1/6 transform -scale-x-100 flex-none" alt="idProtection">
+                        <div class="flex flex-col shrink">
+                            <h1 class="pl-4 text-lg font-semibold  text-gray-800 lg:text-2xl dark:text-white">Privacy Protection</h1>
+                            <p class="pl-4 text-md font-normal text-gray-600">Lindungi privasi dan kelola kontak Anda sebagai pemilik domain. Data Anda terlindung namun Anda tetap dapat dihubungi oleh pihak luar secara lebih privat</p>
+                            <h1 class="text-right text-xl font-bold pr-3">Rp 75,000<sub>/yr</sub></h1>
+                            <input type="hidden" name="idProtection" value="false">
+                        </div>
+                        <button type="button" id="add-protection-domain" onclick="addOrder('ID Protection','75000')" class="grow text-blue-800 bg-blue-200 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm w-1/3 py-2.5 ml-10 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add to cart</button>
+                    </div>
+                </div>
             </div>
             <!-- end result product valid -->
 
@@ -168,7 +181,7 @@
                             <span id="order-price" class="text-gray-50 font-semibold inline-block" value="<?= $id['pricing'] ?>">Rp <?= number_format($id['pricing'], 0, ',') ?></span>
                         </div>
                     </li>
-                    <?php if ($this->session->userdata('data_perusahaan') === 'kuisioner') {
+                    <?php if ($this->session->userdata('kuisioner')) {
                     ?>
                         <li class="grid grid-cols-2 md:grid-cols-2 gap-4  mt-0 items-order">
                             <div class="justify-center border-b-1">
@@ -231,20 +244,20 @@
             </div>
         </div>
         <div class="mt-20 flex flex-col col-span-2">
-            <h1 class="text-4xl my-5 font-thin tracking-tight leading-none text-gray-900 md:text-3xl lg:text-3xl dark:text-white">Billing Account</h1>
+            <h1 class="text-4xl my-5 font-thin tracking-tight leading-none text-gray-700 md:text-3xl lg:text-3xl dark:text-white">Billing Account</h1>
             <div id="accordion-color" data-accordion="collapse" data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white" class="mt-5 shadow-lg">
                 <h2 id="accordion-color-heading-1">
                     <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-800 border border-b-0 border-gray-200 rounded-t-sm focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800">
-                        <input checked id="default-radio-1" type="radio" value="login" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" data-accordion-target="#accordion-color-body-1" aria-expanded="true" aria-controls="accordion-color-body-1" aria-hidden="true">
+                        <input id="default-radio-1" type="radio" value="login" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" data-accordion-target="#accordion-color-body-1" aria-expanded="false" aria-controls="accordion-color-body-1" aria-hidden="false">
                         <?php
                         if (!empty($data)) {
                         ?>
-                            <label for="default-radio-1" class="flex-1 pl-2"><?= $data['fullname'] ?></label>
+                            <label for="default-radio-1" class="flex-1 pl-2" status="loggedin"><?= $data['fullname'] ?></label>
 
                         <?php
                         } else {
                         ?>
-                            <label for="default-radio-1" class="flex-1 pl-2">Login akun member</label>
+                            <label for="default-radio-1" class="flex-1 pl-2" status="guest">Login akun member</label>
                         <?php
                         }
                         ?>
@@ -315,7 +328,7 @@
                 </div>
                 <h2 id="accordion-color-heading-2">
                     <button type="button" class="flex items-center justify-between w-full p-5 font-medium text-left text-gray-800 border border-t-0 border-gray-200 focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-800 dark:border-gray-700 dark:text-gray-400 hover:bg-blue-100 dark:hover:bg-gray-800">
-                        <input id="default-radio-2" type="radio" value="register" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" data-accordion-target="#accordion-color-body-2" aria-expanded="false" aria-controls="accordion-color-body-2">
+                        <input checked id="default-radio-2" type="radio" value="register" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" data-accordion-target="#accordion-color-body-2" aria-expanded="true" aria-controls="accordion-color-body-2">
                         <label for="default-radio-2" class="flex-1 pl-2">Daftar akun member</label>
                         <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
@@ -360,22 +373,36 @@
                             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
                                 <div>
                                     <label class="text-gray-600 dark:text-gray-200" for="namaDepan">Nama Depan</label>
-                                    <input id="namaDepan" type="text" name="firstNama" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php if (isset($register['firstName'])) : ?>
+                                        <input id="namaDepan" type="text" value="<?= $register['firstName'] ?>" name="firstNama" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php else : ?>
+                                        <input id="namaDepan" type="text" name="firstNama" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php endif; ?>
                                 </div>
-
                                 <div>
                                     <label class="text-gray-600 dark:text-gray-200" for="namaBelakang">Nama Belakang</label>
-                                    <input id="namaBelakang" type="text" name="lastName" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($register['lastName'])) : ?>
+                                        <input id="lastName" type="text" value="<?= $register['lastName'] ?>" name="lastName" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php else : ?>
+                                        <input id="lastName" type="text" name="lastName" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div>
                                     <label class="text-gray-600 dark:text-gray-200" for="emailRegister">Email Valid</label>
-                                    <input id="emailRegister" type="email" name="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <input id="email" type="text" name="email" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php if (isset($errors['email'])) : ?>
+                                        <div class="error-message text-sm text-red-600"><?php echo $errors['email']; ?></div>
+                                    <?php endif; ?>
                                 </div>
 
                                 <div>
                                     <label class="text-gray-600 dark:text-gray-200" for="nomoWA">Nomor Whatsapp</label>
-                                    <input id="nomorWA" type="telepon" name="telepon" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($register['telepon'])) : ?>
+                                        <input id="telepon" type="text" value="<?= $register['telepon'] ?>" name="telepon" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php else : ?>
+                                        <input id="telepon" type="text" name="telepon" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <h2 class="text-lg font-semibold text-gray-800 capitalize dark:text-white mt-8">Billing Address</h2>
@@ -390,34 +417,54 @@
                                 <div>
                                     <label class="text-gray-600 dark:text-gray-200" for="negara">Negara</label>
                                     <select id="negara" name="negara" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                                        <option value="indonesia">Indonesia</option>
+                                        <option value="ID">Indonesia</option>
                                     </select>
                                 </div>
 
                                 <div>
                                     <label class="text-gray-600 dark:text-gray-200" for="alamatLengkap">Alamat Lengkap</label>
-                                    <input id="alamatLengkap" name="alamat1" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($register['alamat1'])) : ?>
+                                        <input id="alamat1" type="text" value="<?= $register['alamat1'] ?>" name="alamat1" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php else : ?>
+                                        <input id="alamat1" type="text" name="alamat1" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php endif; ?>
                                 </div>
                                 <div>
                                     <div class="flex flex-row" style="justify-content: space-between;">
                                         <label class="text-gray-600 dark:text-gray-200" for="namaPerusahaan">Alamat Lengkap 2</label>
                                         <span class="text-gray-400 text-sm dark:text-gray-200">Opsional</span>
                                     </div>
-                                    <input id="alamatLengkap2" name="alamat2" type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($register['alamat2'])) : ?>
+                                        <input id="alamat2" type="text" value="<?= $register['alamat2'] ?>" name="alamat2" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php else : ?>
+                                        <input id="alamat2" type="text" name="alamat2" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-5">
                                 <div class="col-span-2">
                                     <label class="text-gray-600 dark:text-gray-200" for="kota">Kota</label>
-                                    <input id="kota" type="text" name="kota" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($register['kota'])) : ?>
+                                        <input id="kota" type="text" value="<?= $register['kota'] ?>" name="kota" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php else : ?>
+                                        <input id="kota" type="text" name="kota" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="col-span-2">
                                     <label class="text-gray-600 dark:text-gray-200" for="provinsi">Provinsi</label>
-                                    <input id="provinsi" type="text" name="provinsi" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($register['region'])) : ?>
+                                        <input id="region" type="text" value="<?= $register['region'] ?>" name="region" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php else : ?>
+                                        <input id="region" type="text" name="region" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php endif; ?>
                                 </div>
-                                <div class="col-span-2">
+                                <div class="col-span-1">
                                     <label class="text-gray-600 dark:text-gray-200" for="kodepos">Kode Pos</label>
-                                    <input id="kodepos" type="text" name="kodepos" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($register['kodepos'])) : ?>
+                                        <input id="kodepos" type="text" value="<?= $register['kodepos'] ?>" name="kodepos" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php else : ?>
+                                        <input id="kodepos" type="text" name="kodepos" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" required>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <h1 class="text-lg font-semibold text-gray-800 capitalize dark:text-white mt-8">Informasi Tambahan Diperlukan</h1>
@@ -474,10 +521,16 @@
                                         </div>
                                     </div>
                                     <input id="passwordRegister1" type="password" name="password1" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($errors['password1'])) : ?>
+                                        <div class="error-message text-sm text-red-600"><?php echo $errors['password1']; ?></div>
+                                    <?php endif; ?>
                                 </div>
                                 <div>
                                     <label class="text-gray-600 dark:text-gray-200" for="passwordRegister2">Konfirmasi Kata Sandi</label>
                                     <input id="passwordRegister2" type="password" name="password2" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                    <?php if (isset($errors['password2'])) : ?>
+                                        <div class="error-message text-sm text-red-600"><?php echo $errors['password2']; ?></div>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
@@ -485,6 +538,19 @@
                 </div>
             </div>
         </div>
+        <div class="mt-5 flex flex-col col-span-2">
+            <h1 class="text-4xl mb-7 font-thin tracking-tight leading-none text-gray-800 md:text-3xl lg:text-3xl dark:text-white">Payment Method</h1>
+            <ul class="w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-md shadow-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+                    <?php foreach ($pay as $key) : ?>
+                        <div class="flex items-center pl-5">
+                            <input id="list-radio-<?= $key->displayname ?>" type="radio" value="<?= $key->module ?>" name="paymentMethod" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500" required>
+                            <label for="list-radio-<?= $key->displayname ?>" class="w-full py-4 ml-5 text-md font-medium text-gray-900 dark:text-gray-300"><?= $key->displayname ?> </label>
+                        </div>
+                    <?php endforeach; ?>
+                </li>
+            </ul>
+        </div>  
         <!-- end search -->
     </div>
 </form>

@@ -268,14 +268,37 @@
 
 
 <script>
+    document.getElementById("default-search-1").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Mencegah pengiriman formulir (jika ada)
+            document.getElementById("btn-daftar-domain-1").click(); // Memicu klik pada tombol "Cari"
+        }
+    });
+    document.getElementById("default-search-2").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Mencegah pengiriman formulir (jika ada)
+            document.getElementById("btn-daftar-domain-2").click(); // Memicu klik pada tombol "Cari"
+        }
+    });
+    document.getElementById("default-search-3").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Mencegah pengiriman formulir (jika ada)
+            document.getElementById("btn-daftar-domain-3").click(); // Memicu klik pada tombol "Cari"
+        }
+    });
+
     document.addEventListener("DOMContentLoaded", function(e) {
-        var radio1 = document.getElementById("default-radio-1");
-        var radio2 = document.getElementById("default-radio-2");
         var loginForm = document.querySelectorAll("#loginForm input");
         var registerForm = document.querySelectorAll("#registerForm input");
-        registerForm.forEach(function(input) {
+        const buttonCheckout = document.getElementById('checkout');
+        const radio1 = document.getElementById("default-radio-1");
+        const radio2 = document.getElementById("default-radio-2");
+
+        loginForm.forEach(function(input) {
             input.setAttribute("disabled", "disabled");
         });
+        buttonCheckout.removeAttribute('disabled');
+        document.getElementById('popover-top').classList.add('hidden');
         radio1.addEventListener("change", function() {
             if (radio1.checked) {
                 registerForm.forEach(function(input) {
@@ -284,6 +307,12 @@
                 loginForm.forEach(function(input) {
                     input.removeAttribute("disabled");
                 });
+                if (radio1.nextElementSibling.getAttribute('status') === 'guest') {
+                    buttonCheckout.setAttribute('disabled', true);
+                    document.getElementById('popover-top').classList.remove('hidden');
+                } else {
+                    buttonCheckout.removeAttribute('disabled');
+                }
                 // Menonaktifkan elemen-elemen dalam registerForm
             }
         });
@@ -296,7 +325,12 @@
                 loginForm.forEach(function(input) {
                     input.setAttribute("disabled", "disabled");
                 });
+                if (radio1.nextElementSibling.getAttribute('status') === 'guest') {
+                    buttonCheckout.removeAttribute('disabled');
+                    document.getElementById('popover-top').classList.add('hidden');
+                }
             }
+            console.log(radio1.nextElementSibling.getAttribute('status'));
         });
     });
 
@@ -353,7 +387,7 @@
             const buttonCheckout = document.getElementById('checkout');
 
             buttonCheckout.removeAttribute('disabled');
-            buttonCheckout.nextElementSibling.remove();
+            document.getElementById('popover-top').classList.add('hidden');
             loadingButton(loginGoogleElement);
             // Melakukan pengiriman data ke fungsi login menggunakan AJAX
             $.ajax({
@@ -375,6 +409,9 @@
                                 <div class="pl-3 text-login text-sm md:text-md">Logout</div>
                             </a>`;
 
+                        radio1.nextElementSibling.setAttribute('status', 'loggedin');
+                        radio1.nextElementSibling.textContent = response['fullname'];
+
                         loginForm.innerHTML = `
                         <p class="text-md text-gray-500 font-normal">` + response['fullname'] + `</p>
                             <p class="text-md text-gray-500 font-normal">` + response['address'] + `</p>
@@ -394,6 +431,12 @@
 
                 },
                 error: function(xhr, status, error) {
+                    loginGoogleElement.innerHTML = 'Login';
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Login invalid!',
+                    })
                     // Penanganan kesalahan AJAX jika diperlukan
                     console.error(xhr, status, error);
                 },
@@ -461,6 +504,7 @@
             const domainOrder = document.querySelector('.items-order-domain');
             const searchInputs = btnDomain.parentElement.querySelector('.default-search');
             const searchValue = searchInputs.value;
+            document.getElementById('idProtection').className = 'hidden';
 
             if (!searchValue) {
                 // Input tidak diisi
@@ -494,6 +538,7 @@
                         success: function(response) {
 
                             btnDomain.innerHTML = 'Cari';
+                            document.getElementById('idProtection').className = 'visible';
                             // Tangani respons dari controller di sini
                             console.log(response); // Contoh: Cetak respons ke konsol
 
@@ -694,9 +739,6 @@
                             var pricing = 0;
 
                             addOrder(searchValue, pricing);
-                            if (hiddenButton) {
-                                hiddenButton.classList.add('hidden');
-                            }
 
                             // Hilangkan loading
                             loadingDiv.style.display = 'none';

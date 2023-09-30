@@ -36,6 +36,7 @@ class Instan extends CI_Controller
 	{
 		include('Template.php');
 		$this->session->unset_userdata('data_perusahaan');
+		$this->session->unset_userdata('kuisioner');
 		$this->session->unset_userdata('susunmenu');
 
 
@@ -51,12 +52,13 @@ class Instan extends CI_Controller
 	}
 	public function kuisioner()
 	{
+		$this->session->unset_userdata('data_perusahaan');
 		$this->session->unset_userdata('susunmenu');
 		if (empty($this->session->userdata('template'))) {
 			$this->session->set_flashdata('firstTemplate', 'window.onload = showWelcomePopup;');
 			redirect('instan');
 		}
-		$this->session->set_userdata('data_perusahaan', 'kuisioner');
+		$this->session->set_userdata('kuisioner', 'kuisioner');
 		$this->template->load('layout/layoutOrder', 'kuisioner.php');
 	}
 	public function menu()
@@ -166,8 +168,6 @@ class Instan extends CI_Controller
 	public function selesai()
 	{
 
-		print_r($_SESSION);
-
 		if ($this->session->userdata('template')) {
 			if (!$this->session->userdata('access_token')) {
 				$this->loginGoogle();
@@ -179,8 +179,10 @@ class Instan extends CI_Controller
 
 			$templates['id'] = $template;
 			$templates['data'] = $profile;
+			$this->load->model('M_api');
+			$templates['pay'] = $this->M_api->getPaymentMethod();
 
-			if ($this->session->userdata('data_perusahaan') === 'kuisioner') {
+			if ($this->session->userdata('kuisioner')) {
 				$templates['totals'] = $template['pricing'] + 250000;
 			};
 			$this->template->load('layout/layoutOrder', 'selesai.php', $templates);
@@ -261,25 +263,188 @@ class Instan extends CI_Controller
 	function logoutLogin()
 	{
 		$this->session->unset_userdata('profile');
+		$this->session->unset_userdata('access_token');
+		$this->session->unset_userdata('getUrl');
 		return 'berhasil';
+	}
+
+	function checkoutValidation()
+	{
+		if ($_POST['default-radio'] === 'login') {
+			$this->checkoutSubmit();
+		} else {
+
+			$this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_check_email_exists');
+			$this->form_validation->set_rules('password1', 'Kata Sandi', 'required|min_length[5]');
+			$this->form_validation->set_rules('password2', 'Konfirmasi Kata Sandi', 'required|matches[password1]');
+
+			if ($this->form_validation->run() == FALSE) {
+				if (!$this->session->userdata('access_token')) {
+					$this->loginGoogle();
+				}
+
+				$profile = $this->session->userdata('profile');
+
+				$template = $this->session->userdata('template');
+
+				$templates['id'] = $template;
+				$templates['data'] = $profile;
+				$this->load->model('M_api');
+				$templates['pay'] = $this->M_api->getPaymentMethod();
+
+				if ($this->session->userdata('kuisioner')) {
+					$templates['totals'] = $template['pricing'] + 250000;
+				};
+				$errors = $this->form_validation->error_array();
+				$templates['errors'] = $errors;
+				$templates['register'] = [
+					'firstName' => $_POST['firstNama'],
+					'lastName' => $_POST['lastName'],
+					'email' => $_POST['email'],
+					'telepon' => $_POST['telepon'],
+					'namaPerusahaan' => $_POST['namaPerusahaan'],
+					'negara' => $_POST['negara'],
+					'alamat1' => $_POST['alamat1'],
+					'alamat2' => $_POST['alamat2'],
+					'kota' => $_POST['kota'],
+					'region' => $_POST['region'],
+					'kodepos' => $_POST['kodepos'],
+					'survey' => $_POST['survey'],
+					'akuninfo' => $_POST['akuninfo'],
+					'password1' => $_POST['password1'],
+					'password2' => $_POST['password2'],
+				];
+
+				$this->template->load('layout/layoutOrder', 'selesai.php', $templates);
+			} else {
+				$this->checkoutSubmit();
+			}
+		}
+	}
+	public function check_email_exists($email)
+	{
+		$this->load->model('M_api');
+
+		// Panggil metode dalam model untuk memeriksa keberadaan email
+		$email_exists = $this->M_api->GetClients($email);
+
+		if ($email_exists !== 'error') {
+			// Email sudah terdaftar, validasi gagal
+			$this->form_validation->set_message('check_email_exists', 'Alamat email sudah terdaftar.');
+			return FALSE;
+		} else {
+			// Email belum terdaftar, validasi berhasil
+			return TRUE;
+		}
 	}
 
 	function checkoutSubmit()
 	{
-		print_r($_POST);
-		print_r($_SESSION);
-		if($_POST['default-radio'] === 'login'){
+		
+		$this->load->model('M_api');
 
-			$data = [
-				'userid' => $_POST['userid'],
-				'pid' => $this->session->userdata('template')['id'],
-				'domain' => $this->session->userdata('domain')['domain'],
-			]
-			$domain = $this->session->userdata('domain')['domain'];
-			$domaintype = $this->session->userdata('domain')['type'];
-			
-		};
+		if (!$_POST['eppcode']) {
+			$eppCode = NULL;
+		} else {
+			$eppCode = $_POST["eppcode"];
+		}
+		$data['order'] = [
+			'idTemplate' => $this->session->userdata('template')['id'],
+			'nameTemplate' => $this->session->userdata('template')['name'],
+			'pid' => '77',
+			'domain' => $this->session->userdata('domain')['domain'],
+			'domaintype' => $this->session->userdata('domain')['type'],
+			'eppCode' => $eppCode,
+			'idProtection' => $_POST['idProtection'],
+			'paymentMethod' => $_POST['paymentMethod'],
+		];
+
+		if ($this->session->userdata('data_perusahaan')) {
+
+			$sessionPerusahaan = $this->session->userdata('data_perusahaan');
+
+			$data['instansi'] = [
+				'namaperusahaan' => $sessionPerusahaan['namaperusahaan'],
+				'alamat' =>  $sessionPerusahaan['alamat'],
+				'negara' => $sessionPerusahaan['negara'],
+				'provinsi' =>  $sessionPerusahaan['provinsi'],
+				'kota' => $sessionPerusahaan['kota'],
+				'kodepos' => $sessionPerusahaan['kodepos'],
+				'telepon' => $sessionPerusahaan['telepon'],
+				'fax' => $sessionPerusahaan['fax'],
+				'email' => $sessionPerusahaan['email'],
+				'facebook' => $sessionPerusahaan['facebook'],
+				'instagram' => $sessionPerusahaan['instagram'],
+				'linkedin' => $sessionPerusahaan['linkedin'],
+			];
+		} elseif ($this->session->userdata('kuisioner')) {
+			$data['instansi'] = 'kuisioner';
+		} else {
+			$data['instansi'] = '';
+		}
+
+		if ($_POST['default-radio'] === 'login') {
+
+			$data['order']['clientid'] = $this->session->userdata('profile')['userid'];
+			$response = $this->M_api->addOrder($data);
+
+			if ($response->result !== 'error') {
+				$this->session->unset_userdata('user_data');
+				$this->session->unset_userdata('copywriting');
+				$this->session->unset_userdata('data_perusahaan');
+				$this->session->unset_userdata('template');
+				$this->session->unset_userdata('profile');
+				redirect('https://web.dewahoster.co.id/viewinvoice.php?id=' . $response->invoiceid);
+			} else {
+				print_r($response);
+				echo "gagal";
+			};
+		} elseif ($_POST['default-radio'] === 'register') {
+
+			$data['register'] = [
+				'firstName' => $_POST['firstNama'],
+				'lastName' => $_POST['lastName'],
+				'email' => $_POST['email'],
+				'telepon' => $_POST['telepon'],
+				'namaPerusahaan' => $_POST['namaPerusahaan'],
+				'negara' => $_POST['negara'],
+				'alamat1' => $_POST['alamat1'],
+				'alamat2' => $_POST['alamat2'],
+				'kota' => $_POST['kota'],
+				'region' => $_POST['region'],
+				'kodepos' => $_POST['kodepos'],
+				'survey' => $_POST['survey'],
+				'akuninfo' => $_POST['akuninfo'],
+				'password1' => $_POST['password1'],
+				'password2' => $_POST['password2'],
+			];
+
+			$response = $this->M_api->addClient($data['register']);
+
+			if ($response->result !== 'error') {
+				$data['order']['clientid'] = $response->clientid;
+				$response = $this->M_api->addOrder($data);
+				if ($response->result !== 'error') {
+					$this->session->unset_userdata('user_data');
+					$this->session->unset_userdata('copywriting');
+					$this->session->unset_userdata('data_perusahaan');
+					$this->session->unset_userdata('template');
+					$this->session->unset_userdata('profile');
+					redirect('https://web.dewahoster.co.id/viewinvoice.php?id=' . $response->invoiceid);
+				} else {
+					print_r($response);
+					echo "gagal";
+				};
+			} else {
+				
+				print_r($response);
+				echo "gagal";
+			}
+		} else {
+			redirect('instan');
+		}
 	}
+
 	function doLogin()
 	{
 		$email = $_POST['email'];
@@ -290,8 +455,8 @@ class Instan extends CI_Controller
 		$output = $this->M_api->loginClient($email, $password);
 
 		if ($output['result'] !== 'error') {
-            $this->session->set_userdata('profile', $output);
-        }
+			$this->session->set_userdata('profile', $output);
+		}
 		echo json_encode($output);
 	}
 }

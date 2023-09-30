@@ -241,34 +241,97 @@ class M_api extends CI_Model
         return $data;
     }
 
-    function addUser($firstname, $lastname, $email, $address, $city, $state, $postcode, $country, $phonenumber, $password, $survey, $akuninfo)
+    function addClient($data)
     {
-        $customFields = [
-            [
-                'name' => 'survey',
-                'value' => $akuninfo
-            ], [
-                'name' => 'akuninfo',
-                'value' => $akuninfo,
-            ]
-        ];
-
         $body = [
             'form_params' => [
                 'action' => 'AddClient',
                 'identifier' => $this->identifier,
                 'secret' => $this->secret,
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'email' => $email,
-                'address1' => $address,
-                'city' => $city,
-                'state' => $state,
-                'postcode' => $postcode,
-                'country' => $country,
-                'phonenumber' => $phonenumber,
-                'password2' => $password,
-                'customFields' => base64_encode(json_encode($customFields)),
+                'firstname' => $data['firstName'],
+                'lastname' => $data['lastName'],
+                'email' => $data['email'],
+                'address1' => $data['alamat1'],
+                'city' => $data['kota'],
+                'state' => $data['region'],
+                'postcode' => $data['kodepos'],
+                'country' => $data['negara'],
+                'phonenumber' => $data['telepon'],
+                'password2' => $data['password1'],
+                'customfields' => array(base64_encode(serialize(array("20" => $data['survey']))), base64_encode(serialize(array("21" => $data['akuninfo'])))),
+                'responsetype' => 'json'
+            ]
+        ];
+
+        print_r($body);
+        echo "<br>";
+        echo "<br>";
+        echo "Berhasil Masuk Register";
+        die;
+
+        // $client = new GuzzleClient([
+        //     'base_uri' => $this->urlsite,
+        // ]);
+
+        // $response = $client->post(
+        //     'includes/api.php',
+        //     $body
+        // );
+
+        // $body = $response->getBody();
+        // $data = json_decode($body);
+
+        // return $data;
+    }
+    function addOrder($data)
+    {
+      
+        $body = [
+            'form_params' => [
+                'action' => 'AddOrder',
+                'identifier' => $this->identifier,
+                'secret' => $this->secret,
+                'clientid' => $data['order']['clientid'],
+                'pid' => $data['order']['pid'],
+                'domain' => $data['order']['domain'],
+                'idnlanguage' => array(''),
+                'billingcycle' => 'annually',
+                'domaintype' => $data['order']['domaintype'],
+                'regperiod' => 1,
+                'dnsmanagement' => 1,
+                'nameserver1' => 'ns1.dewahoster.com',
+                'nameserver2' => 'ns2.dewahoster.com',
+                'eppCode' => $data['order']['eppCode'],
+                'paymentmethod' => $data['order']['paymentMethod'],
+                'idprotection' => $data['order']['idProtection'],
+                'responsetype' => 'json',
+            ]
+        ];
+
+        $client = new GuzzleClient([
+            'base_uri' => $this->urlsite,
+            
+        ]);
+
+        $response = $client->post(
+            'includes/api.php',
+            $body
+        );
+
+        $body = $response->getBody();
+
+        $data = json_decode($body);
+
+        return $data;
+    }
+
+    function getPaymentMethod()
+    {
+        $body = [
+            'form_params' => [
+                'action' => 'GetPaymentMethods',
+                'identifier' => $this->identifier,
+                'secret' => $this->secret,
                 'responsetype' => 'json'
             ]
         ];
@@ -285,40 +348,9 @@ class M_api extends CI_Model
         $body = $response->getBody();
         $data = json_decode($body);
 
-        return $data;
-    }
-    function addOrder($clientid, $pid, $domain, $domaintype, $eppCode, $paymentmethod, $idProtection)
-    {
-        $body = [
-            'form_params' => [
-                'action' => 'AddOrder',
-                'identifier' => $this->identifier,
-                'secret' => $this->secret,
-                'clientid' => $clientid,
-                'pid' => $pid,
-                'domain' => $domain,
-                'idnlanguage' => array(''),
-                'billingcycle' => 'annually',
-                'domaintype' => $domaintype,
-                'regperiod' => 1,
-                'dnsmanagement' => 0,
-                'nameserver1' => 'ns1.dewahoster.com',
-                'nameserver2' => 'ns2.dewahoster.com',
-                'eppCode' => $eppCode,
-                'paymentmethod' => $paymentmethod,
-                'idprotection' => $idProtection,
-                'responsetype' => 'json',
-            ]
-        ];
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Headers: *");
 
-        $client = new GuzzleClient([
-            'base_uri' => $this->urlsite,
-        ]);
-
-        $body = $client->getBody();
-
-        $data = json_decode($body);
-
-        return $data;
+        return $data->paymentmethods->paymentmethod;
     }
 }

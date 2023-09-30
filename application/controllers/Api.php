@@ -39,7 +39,7 @@ class Api extends CI_Controller
             'type' => $type,
             'price' => $data[$type][1],
         ];
-        $this->session->set_userdata('domain',$session);
+        $this->session->set_userdata('domain', $session);
         echo json_encode($output);
     }
 
@@ -49,6 +49,12 @@ class Api extends CI_Controller
         $data = $this->M_api->getClientDetails($email);
         print_r($data);
     }
+    function getPaymentMethod()
+    {
+        $data = $this->M_api->getPaymentMethod();
+
+        echo json_encode($data);
+    }
 
     function login()
     {
@@ -57,12 +63,15 @@ class Api extends CI_Controller
 
         $output = $this->M_api->loginClient($email, $password);
 
-        if (!empty($output->fullname)) {
-            
-            $this->session->set_userdata('profile', $output);
+        if ($output['fullname']) {
+
+            // $this->session->set_userdata('profile', $output);
+            echo "ini masuk percabangan";
+            echo $output['fullname'];
+            echo json_encode($output);
+        }else {
             echo json_encode($output);
         }
-        echo json_encode($output);
     }
 
 

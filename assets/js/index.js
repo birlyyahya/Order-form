@@ -8,14 +8,33 @@ const resultDiv = document.getElementById("result-domain");
 const btnDaftarDomain = document.querySelectorAll(".btn-daftar-domain");
 const resultDivNonValid = document.getElementById("result-domain-nonvalid");
 const addCartDomain = document.getElementById("add-cart-domain");
+const addProtectionDomain = document.getElementById("add-protection-domain");
 const tabs = document.querySelectorAll("[data-tabs-target]");
 const resultDivs = document.querySelectorAll("#result-domain");
 const eppAuth = document.getElementById("epp-auth");
-
+const radio1 = document.getElementById("default-radio-1");
+const radio2 = document.getElementById("default-radio-2");
 
 let activeTab = null;
 
-
+document.getElementById('orderForm').addEventListener('submit', function(event) {
+    var formIsValid = true;
+    const btnCheckout = document.getElementById('checkout');
+    // Loop through all required elements
+    var requiredElements = this.querySelectorAll('[required]');
+    for (var i = 0; i < requiredElements.length; i++) {
+      if (requiredElements[i].value === '') {
+        formIsValid = false;
+        break; // Break out of the loop as soon as an empty required field is found
+      }
+    }
+  
+    // If form is not valid, prevent submission
+    if (!formIsValid) {
+     loadingButton(btnCheckout);
+    }
+  });
+  
 
 function getImage(element) {
 	const image = element.querySelector("img");
@@ -137,6 +156,14 @@ function disableTab(element) {
 	}
 }
 
+function checkInputs() {
+	if (input1.value.trim() !== "" && input2.value.trim() !== "") {
+		submitButton.removeAttribute("disabled"); // Aktifkan tombol submit
+	} else {
+		submitButton.setAttribute("disabled", "true"); // Nonaktifkan tombol submit
+	}
+}
+
 function addOrder(kategori, pricing) {
 	var orderList = document.querySelector(".list-orders");
 
@@ -178,12 +205,29 @@ function addOrder(kategori, pricing) {
 
 	TotalPricing(pricing);
 
-	addCartDomain.className =
-		"text-gray-50 bg-gray-500 hover:bg-gray-300 focus:ring-4 focus:ring-gray-300 font-medium rounded-md text-sm px-5 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
-	addCartDomain.textContent = "Hapus";
-	addCartDomain.onclick = function () {
-		hapusOrder(orderItems, pricing); // Memanggil fungsi hapusOrder dengan elemen item order sebagai argumen
-	};
+	if (kategori === "ID Protection") {
+		addProtectionDomain.className =
+			"text-gray-50 bg-blue-500 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-3 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
+		addProtectionDomain.innerHTML = `<svg class="w-4 h-4 text-gray-50 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>`;
+		var inputIdProtection = document.querySelector('input[name="idProtection"]');
+		inputIdProtection.setAttribute("value", "true");
+        
+
+		addProtectionDomain.onclick = function () {
+			hapusOrder(orderItems, pricing); // Memanggil fungsi hapusOrder dengan elemen item order sebagai argumen
+		};
+	} else {
+		addCartDomain.className =
+			"text-gray-50 bg-blue-500 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-3 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
+		addCartDomain.innerHTML = `<svg class="w-4 h-4 text-gray-50 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+      </svg>`;
+		addCartDomain.onclick = function () {
+			hapusOrder(orderItems, pricing); // Memanggil fungsi hapusOrder dengan elemen item order sebagai argumen
+		};
+	}
 }
 
 function TotalPricing(pricing) {
@@ -204,16 +248,26 @@ function hapusOrder(orderItem, pricing) {
 	btnDaftarDomain.forEach((element) => {
 		element.removeAttribute("disabled");
 	});
-    searchInput.forEach((element) => {
+	searchInput.forEach((element) => {
 		element.removeAttribute("disabled");
 	});
 	disableTab("false");
-	addCartDomain.className =
-		"text-blue-800 bg-blue-200 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
-	addCartDomain.textContent = "Add Cart";
-	addCartDomain.onclick = function () {
-		addOrder(kategori.textContent, pricing);
-	};
+
+	if (kategori.textContent === "ID Protection") {
+		addProtectionDomain.className =
+			"grow text-blue-800 bg-blue-200 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm w-1/3 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
+		addProtectionDomain.textContent = "Add Cart";
+		addProtectionDomain.onclick = function () {
+			addOrder(kategori.textContent, pricing);
+		};
+	} else {
+		addCartDomain.className =
+			"text-blue-800 bg-blue-200 hover:bg-blue-300 focus:ring-4 focus:ring-blue-300 font-medium rounded-md text-sm px-5 py-2.5 ml-5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800";
+		addCartDomain.textContent = "Add Cart";
+		addCartDomain.onclick = function () {
+			addOrder(kategori.textContent, pricing);
+		};
+	}
 }
 
 // Fungsi untuk menambahkan menu baru
@@ -289,6 +343,7 @@ function moveMenuDown(button) {
 		menuItems.parentElement.insertBefore(nextMenu, menuItems);
 	}
 }
+
 // Mendapatkan referensi ke elemen select
 const selectElement = document.getElementById("negara");
 
@@ -313,7 +368,7 @@ fetch(apiUrl)
 		if (selectElement) {
 			sortedCountries.forEach((country) => {
 				const option = document.createElement("option");
-				option.value = country.name.common;
+				option.value = country.cca2;
 				option.textContent = country.name.common;
 				selectElement.appendChild(option);
 			});
